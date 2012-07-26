@@ -38,6 +38,7 @@ gem 'jquery-rails'
 # gem 'debugger'
 
 group :development, :test do
+  gem 'rspec-rails'
   gem 'execjs'
   gem 'therubyracer'
 end
