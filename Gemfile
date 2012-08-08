@@ -45,6 +45,7 @@ group :development, :test do
   gem 'cucumber'
   gem 'cucumber-rails', '= 1.0.6', :require => false
 end
+gem 'pusher'
 
 group :production do
   gem 'pg'

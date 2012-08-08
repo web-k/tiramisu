@@ -1,3 +1,6 @@
+# http://rubygems.org/gems/pusher
+require 'pusher'
+
 class MessagesController < ApplicationController
   before_filter :authenticate
 
@@ -45,8 +48,13 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(params[:message])
     @message.user_name = session[:user_name] 
+    Pusher.app_id = '27608'
+    Pusher.key = '3addd561c2cd0d1a49ed'
+    Pusher.secret = ENV['pusher_secret']
+
     respond_to do |format|
       if @message[:content].blank? or @message.save
+        Pusher['trms-channel'].trigger('message_added', {:message => @message, :time => @message.created_at.localtime.strftime('%H:%M')})
         format.html { redirect_to root_path }
         format.json { render json: @message, status: :created, location: @message }
       else
