@@ -41,4 +41,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'execjs'
   gem 'therubyracer'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'cucumber'
+  gem 'cucumber-rails', '= 1.0.6', :require => false
 end
