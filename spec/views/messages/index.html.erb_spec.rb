@@ -10,6 +10,11 @@ describe "messages/index" do
         :content => "Content"
       )
     ])
+    assign(:message,
+      stub_model(Message,
+        :content => "Content"
+      )
+    )
   end
 
   it "renders a list of messages" do

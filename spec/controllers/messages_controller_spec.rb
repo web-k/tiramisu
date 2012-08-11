@@ -81,7 +81,7 @@ describe MessagesController do
 
       it "redirects to the created message" do
         post :create, {:message => valid_attributes}, valid_session
-        response.should redirect_to(Message.last)
+        response.should redirect_to root_path
       end
     end
 
