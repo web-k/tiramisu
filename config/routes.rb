@@ -2,6 +2,9 @@ Tiramisu::Application.routes.draw do
   root :to => "messages#index"
   resources :messages
 
+  match 'authentication' => 'authentication#index'
+  match 'authentication/login' => 'authentication#login'
+  match 'authentication/logout' => 'authentication#logout'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
