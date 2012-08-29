@@ -4,12 +4,20 @@ describe "messages/index" do
   before(:each) do
     assign(:messages, [
       stub_model(Message,
-        :content => "Content"
+        :content => "Content",
+        :created_at => Time.now
       ),
       stub_model(Message,
-        :content => "Content"
+        :content => "Content",
+        :created_at => Time.now
       )
     ])
+    assign(:message,
+      stub_model(Message,
+        :content => "Content",
+        :created_at => Time.now
+      )
+    )
   end
 
   it "renders a list of messages" do
