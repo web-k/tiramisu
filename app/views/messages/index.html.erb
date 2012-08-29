@@ -1,15 +1,10 @@
 <h1>Listing messages</h1>
 <%= render 'form' %>
 <table>
-  <tr>
-    <th>Content</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
 <% @messages.each do |message| %>
   <tr>
+    <td><%= message.created_at.localtime.strftime('%H:%M') %></td>
     <td><%= message.content %></td>
     <td><%= link_to 'Show', message %></td>
     <td><%= link_to 'Edit', edit_message_path(message) %></td>
