@@ -1,12 +1,12 @@
-こんにちは <%= session[:user_name]%> さん
-<%= link_to 'ログアウト', :controller => 'authentication', :action => 'logout' %>
+<p>こんにちは <%= session[:user_name]%> さん
+<%= link_to 'ログアウト', {:controller => 'authentication', :action => 'logout'}, {:class => 'btn btn-mini'} %></p>
 <%= render 'form' %>
-<table>
+<table class="messages">
 
 <% @messages.each do |message| %>
   <tr>
-    <td><%= message.created_at.localtime.strftime('%H:%M') %></td>
-    <td><%= message.content %></td>
+    <td class="time"><%= message.created_at.localtime.strftime('%H:%M') %></td>
+    <td class="content"><%= message.content %></td>
   </tr>
 <% end %>
 </table>
