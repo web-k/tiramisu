@@ -46,7 +46,7 @@ class MessagesController < ApplicationController
     @message = Message.new(params[:message])
 
     respond_to do |format|
-      if @message.save
+      if @message[:content].blank? or @message.save
         format.html { redirect_to root_path }
         format.json { render json: @message, status: :created, location: @message }
       else
