@@ -44,7 +44,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     @message = Message.new(params[:message])
-
+    @message.user_name = session[:user_name] 
     respond_to do |format|
       if @message[:content].blank? or @message.save
         format.html { redirect_to root_path }
