@@ -6,6 +6,7 @@
 <% @messages.each do |message| %>
   <tr>
     <td class="time"><%= message.created_at.localtime.strftime('%H:%M') %></td>
+    <td class="username">(<%= message.user_name %>)</td>
     <td class="content"><%= message.content %></td>
   </tr>
 <% end %>
