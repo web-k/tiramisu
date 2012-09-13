@@ -1,4 +1,12 @@
-<%= form_tag({:controller => 'authentication', :action => 'login'}, {class: 'form-inline'}) do %>
-  <%= text_field_tag 'user_name'%>
-  <%= submit_tag 'Login', class: 'btn' %>
-<% end %>
+<a href="#myModal" role="button" class="btn btn-primary btn-large" data-toggle="modal">サインイン</a>
+<div class="modal hide fade" id="myModal">
+  <div class="modal-header">
+    <h3>サインイン</h3>
+  </div>
+  <div class="modal-body">
+    <%= form_tag({:controller => 'authentication', :action => 'login'}, {class: 'form-inline'}) do %>
+    <%= text_field_tag 'user_name'%>
+    <%= submit_tag 'Login', class: 'btn' %>
+    <% end %>
+  </div>
+</div>
