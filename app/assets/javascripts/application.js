@@ -19,7 +19,9 @@ $('form.new_message').on('ajax:success', function(){
   location.reload(true);
 });
 $(function(){
-  setTimeout(function(){
-    location.reload(true);
-  }, 30000);
+  if ($('.messages').size()>0) {
+    setTimeout(function(){
+      location.reload(true);
+    }, 30000);
+  }
 });
