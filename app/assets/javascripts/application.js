@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require_tree .
+
+$('form.new_message').on('ajax:success', function(){
+  location.reload(true);
+});
+$(function(){
+  setTimeout(function(){
+    location.reload(true);
+  }, 30000);
+});
