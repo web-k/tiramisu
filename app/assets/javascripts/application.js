@@ -17,6 +17,7 @@
 
 $('form.new_message').on('ajax:success', function(){
   location.reload(true);
+  $(this).find("#message_content").val("");
 });
 $(function(){
   if ($('.messages').size()>0) {
