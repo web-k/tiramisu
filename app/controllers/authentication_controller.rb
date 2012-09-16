@@ -1,6 +1,6 @@
 class AuthenticationController < ActionController::Base
   def index
-    render layout: 'application'
+    render layout: 'top'
   end
 
   def login

@@ -21,13 +21,18 @@
       <div class="navbar-inner">
         <div class="container">
           <div class="brand"><%= image_tag 'tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu' %></div>
-          <p class="nav pull-right logout">
-            こんにちは <%= session[:user_name]%> さん
-            <%= link_to 'ログアウト', {:controller => 'authentication', :action => 'logout'}, {:class => 'btn btn-small'} %>
-          </p>
+          <div class="nav pull-right">
+            <p>
+              <a href="#myModal" role="button" class="btn sign-in" data-toggle="modal">サインイン</a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
+
+     <header class="jumbotron subhead">
+       <h1><%= image_tag 'tiramisu_logo_large.png', alt: 'Tiramisu', class: 'logo_large' %></h1>
+     </header>
 
     <div class="container">
       <div class="content">
