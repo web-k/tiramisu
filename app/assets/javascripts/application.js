@@ -16,13 +16,16 @@
 //= require_tree .
 
 $('form.new_message').on('ajax:success', function(){
-  location.reload(true);
   $(this).find("#message_content").val("");
 });
 $(function(){
-  if ($('.messages').size()>0) {
-    setTimeout(function(){
-      location.reload(true);
-    }, 30000);
-  }
+  var pusher = new Pusher('3addd561c2cd0d1a49ed'); // Replace with your app key
+  var channel = pusher.subscribe('trms-channel');
+  channel.bind('message_added', function(data) {
+    $('ul.messages').prepend('<li><span class="time"> ' + data.time + 
+      ' </span><span class="username' + 
+      ($('#my_name').text() == data.message.user_name ? ' myself' : '') + 
+      '"> (' + data.message.user_name + ') </span><span class="content"> ' +
+       data.message.content + ' </span></li>');
+  });
 });

@@ -11,6 +11,7 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
+    <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 
     <%= stylesheet_link_tag "application", :media => "all" %>
 
@@ -22,7 +23,7 @@
         <div class="container">
           <div class="brand"><%= image_tag 'tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu' %></div>
           <p class="nav pull-right logout">
-            こんにちは <%= session[:user_name]%> さん
+            こんにちは <span id="my_name"><%= session[:user_name]%></span> さん
             <%= link_to 'ログアウト', {:controller => 'authentication', :action => 'logout'}, {:class => 'btn btn-small'} %>
           </p>
         </div>
