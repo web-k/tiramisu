@@ -1,11 +1,10 @@
 <%= render 'form' %>
-<table class="messages">
-
+<ul class="messages">
 <% @messages.each do |message| %>
-  <tr>
-    <td class="time"><%= message.created_at.localtime.strftime('%H:%M') %></td>
-    <td class="username">(<%= message.user_name.blank? ? 'unknown' : message.user_name %>)</td>
-    <td class="content"><%= message.content %></td>
-  </tr>
+  <li>
+    <span class="time"><%= message.created_at.localtime.strftime('%H:%M') %></span>
+    <span class="username<%= message.user_name == session[:user_name] ? " myself" : "" %>">(<%= message.user_name.blank? ? 'unknown' : message.user_name %>)</span>
+    <span class="content"><%= message.content %></span>
+  </li>
 <% end %>
-</table>
+</ul>
