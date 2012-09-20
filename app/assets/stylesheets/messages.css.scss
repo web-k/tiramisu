@@ -2,8 +2,19 @@
   margin-bottom: -8px;
 }
 .messages {
+  list-style: none;
+  margin-left: 0;
   margin-bottom: 16px;
-  .time,.username {
-    padding-right: 8px;
+  .time {
+    color: #a3764f;
+  }
+  .time, .username {
+    padding-right: 2px;
+  }
+  .username {
+    color: blue;
+  }
+  .username.myself {
+    color: gray;
   }
 }
