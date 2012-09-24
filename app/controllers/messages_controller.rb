@@ -51,6 +51,7 @@ class MessagesController < ApplicationController
     Pusher.app_id = '27608'
     Pusher.key = '3addd561c2cd0d1a49ed'
     Pusher.secret = ENV['pusher_secret']
+    Pusher.http_proxy = ENV['http_proxy'] if ENV['http_proxy'].present?
 
     respond_to do |format|
       if @message[:content].blank? or @message.save
