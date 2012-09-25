@@ -46,6 +46,8 @@ group :development, :test do
   gem 'cucumber-rails', '= 1.0.6', :require => false
 end
 gem 'pusher'
+gem 'eventmachine'
+gem 'em-http-request'
 
 group :production do
   gem 'pg'

@@ -55,7 +55,17 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message[:content].blank? or @message.save
-        Pusher['trms-channel'].trigger('message_added', {:message => @message, :time => @message.created_at.localtime.strftime('%H:%M')})
+        EM.run do
+          deferrable = Pusher['trms-channel'].trigger_async('message_added', {:message => @message, :time => @message.created_at.localtime.strftime('%H:%M')})
+          deferrable.callback {
+            # Do something on success
+            EM.stop
+          }
+          deferrable.errback { |error|
+            # error is a instance of Pusher::Error
+            EM.stop
+          }
+        end
         format.html { redirect_to root_path }
         format.json { render json: @message, status: :created, location: @message }
       else
