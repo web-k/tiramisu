@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  include ERB::Util
 
   def login?
     session[:user_name].present?
