@@ -21,7 +21,7 @@ $('form.new_message').on('ajax:success', function(){
 $(function(){
   if ($('.messages').size() > 0) {
 
-    var pusher = new Pusher('3addd561c2cd0d1a49ed');
+    var pusher = new Pusher('<%= Pusher.key %>');
 
     var pusher_connection_status = "initialized";
     pusher.connection.bind('connected', function() {
