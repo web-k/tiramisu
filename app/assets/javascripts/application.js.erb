@@ -39,11 +39,13 @@ $(function(){
 
     var channel = pusher.subscribe('trms-channel');
     channel.bind('message_added', function(data) {
-      $('ul.messages').prepend('<li><span class="time"> ' + data.time +
+      var $message = $('<li><span class="time"> ' + data.time +
         ' </span><span class="username' +
         ($('#my_name').text() == data.message.user_name ? ' myself' : '') +
         '"> (' + data.message.user_name + ') </span><span class="content"> ' +
-         data.message.content + ' </span></li>');
+         data.message.content + ' </span></li>').hide();
+      $('ul.messages').prepend($message);
+      $message.fadeIn();
     });
   }
 });
