@@ -1,0 +1,16 @@
+<%= form_for(@channel) do |f| %>
+  <span class="field">
+    <%= f.text_field :name %>
+  </span>
+  <span class="actions">
+    <%= f.submit "チャンネルを作成", :class => 'btn' %>
+  </span>
+<% end %>
+<ul class="channels">
+  <% @channels.each do |channel| %>
+    <li>
+      <%= link_to channel.name, channel_path(channel) %>
+    </li>
+  <% end %>
+</ul>
+

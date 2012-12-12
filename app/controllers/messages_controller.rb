@@ -7,8 +7,8 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.order("created_at DESC")
-    @message = Message.new
+    @messages = Channel.find(params[:channel_id]).messages.order("created_at DESC")
+    @message = Channel.find(params[:channel_id]).messages.build
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,12 +46,13 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create
-    @message = Message.new(params[:message])
+    @channel = Channel.find(params[:channel_id])
+    @message = Channel.find(params[:channel_id]).messages.create(params[:message])
     @message.user_name = session[:user_name] 
 
     respond_to do |format|
       if @message[:content].blank? or @message.save
-        Pusher['trms-channel'].trigger('message_added', {message: {user_name: h(@message.user_name), content: h(@message.content)}, time: @message.created_at.localtime.strftime('%H:%M')})
+        Pusher['channel-' + params[:channel_id]].trigger('message_added', {message: {user_name: h(@message.user_name), content: h(@message.content)}, time: @message.created_at.localtime.strftime('%H:%M')})
         format.html { redirect_to root_path }
         format.json { render json: @message, status: :created, location: @message }
       else

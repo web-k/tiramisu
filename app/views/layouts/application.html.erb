@@ -21,7 +21,7 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="brand"><%= image_tag 'tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu' %></div>
+          <div class="brand"><%= link_to image_tag('tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu'), root_path %></div>
           <p class="nav pull-right logout">
             こんにちは <span id="my_name"><%= session[:user_name]%></span> さん
             <%= link_to 'ログアウト', {:controller => 'authentication', :action => 'logout'}, {:class => 'btn btn-small'} %>

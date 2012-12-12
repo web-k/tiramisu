@@ -1,6 +1,8 @@
 Tiramisu::Application.routes.draw do
-  root :to => "messages#index"
-  resources :messages
+  root :to => "channels#index"
+  resources :channels do
+    resources :messages
+  end
 
   match 'authentication' => 'authentication#index'
   match 'authentication/login' => 'authentication#login'

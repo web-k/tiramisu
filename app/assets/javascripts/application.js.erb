@@ -37,7 +37,7 @@ $(function(){
       pusher_connection_status = "disconnected";
     });
 
-    var channel = pusher.subscribe('trms-channel');
+    var channel = pusher.subscribe($('.messages').data('channel'));
     channel.bind('message_added', function(data) {
       var $message = $('<li><span class="time"> ' + data.time +
         ' </span><span class="username' +
