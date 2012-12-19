@@ -13,7 +13,11 @@
     <![endif]-->
     <script src="http://js.pusher.com/1.12/pusher.min.js"></script>
 
+    <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "channels", :media => "all" %>
+    <%= stylesheet_link_tag "messages", :media => "all" %>
+    <%= stylesheet_link_tag "scaffolds", :media => "all" %>
 
   </head>
   <body>
@@ -44,7 +48,13 @@
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "jquery" %>
+    <%= javascript_include_tag "jquery_ujs" %>
+    <%= javascript_include_tag "twitter/bootstrap" %>
+    <%= javascript_include_tag "bootstrap" %>
+    <%= javascript_include_tag "main" %>
+    <%= javascript_include_tag "channels" %>
+    <%= javascript_include_tag "messages" %>
 
   </body>
 </html>
