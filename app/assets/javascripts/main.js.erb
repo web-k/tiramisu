@@ -29,6 +29,20 @@ $(function(){
          data.message.content + ' </span></li>').hide();
       $('ul.messages').prepend($message);
       $message.fadeIn();
+      resizeGraffiti();
     });
   }
+
+  if ($('#graffiti').size() > 0) {
+    $(window).bind("resize", resizeGraffiti);
+    resizeGraffiti()
+  }
 });
+
+function resizeGraffiti(){
+  var messages_height = $(".messages").height();
+  var messages_width = $(".messages").width();
+  $('#graffiti').attr("height",messages_height);
+  $('#graffiti').attr("width",messages_width);
+  $('#graffiti').sketch();
+}

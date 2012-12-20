@@ -7,6 +7,8 @@
   margin-bottom: 16px;
   display: inline-block;
   word-break: break-all;
+  position: relative;
+  width: 100%;
   .time {
     color: #a3764f;
   }
@@ -19,4 +21,10 @@
   .username.myself {
     color: gray;
   }
+}
+#graffiti {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid #cccccc;
 }
