@@ -7,6 +7,9 @@ Tiramisu::Application.routes.draw do
   match 'authentication' => 'authentication#index'
   match 'authentication/login' => 'authentication#login'
   match 'authentication/logout' => 'authentication#logout'
+
+  post 'pusher/auth' => 'pusher#auth'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

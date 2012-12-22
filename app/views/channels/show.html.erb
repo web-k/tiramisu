@@ -1,5 +1,7 @@
+<div class="row">
+<div class="span9">
 <%= render 'message_form' %>
-<ul class="messages" data-channel="channel-<%= @channel.id %>">
+<ul class="messages" data-channel="presence-channel-<%= @channel.id %>">
 <% @messages.each do |message| %>
   <li>
     <span class="time"><%= message.created_at.localtime.strftime('%H:%M') %></span>
@@ -8,4 +10,9 @@
   </li>
 <% end %>
 </ul>
-
+</div>
+<div class="span3">
+  <ul class="members">
+  </ul>
+</div>
+</div>
