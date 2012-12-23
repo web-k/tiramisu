@@ -21,6 +21,17 @@ $(function(){
     });
 
     var channel = pusher.subscribe($('.messages').data('channel'));
+    channel.bind('pusher:subscription_succeeded', function(members) {
+      members.each(function(member) {
+        add_member(member.id, member.info);
+      });
+    });
+    channel.bind('pusher:member_added', function(member) {
+      add_member(member.id, member.info);
+    });
+    channel.bind('pusher:member_removed', function(member) {
+      remove_member(member.id, member.info);
+    });
     channel.bind('message_added', function(data) {
       var $message = $('<li><span class="time"> ' + data.time +
         ' </span><span class="username' +
@@ -32,3 +43,25 @@ $(function(){
     });
   }
 });
+
+function add_member(member_id, member_info) {
+  var $member = $('<li>' + member_info.name + '</li>');
+  if ($('#my_name').text() == member_info.name) {
+    $member.addClass('myself');
+  }
+  var $members = $('.members');
+  $members.append($member);
+  var $members_li = $members.find('li');
+  $members.html($members_li.sort(function(a,b) {
+    return $(a).text() < $(b).text() ? -1 : 1;
+  }));
+}
+function remove_member(member_id, member_info) {
+  var $members = $('.members li');
+  $members.each(function() {
+    var $member = $(this);
+    if ($member.text() == member_info.name) {
+      $member.remove();
+    }
+  });
+}

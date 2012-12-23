@@ -2,7 +2,7 @@ class ChannelsController < ApplicationController
   before_filter :authenticate
 
   def index
-    @channels = Channel.all
+    @channels = Channel.order("created_at DESC")
     @channel = Channel.new
   end
 
@@ -17,13 +17,8 @@ class ChannelsController < ApplicationController
 
   def show
     @channel = Channel.find(params[:id])
-    @messages = Channel.find(params[:id]).messages.order("created_at DESC")
-    @message = Channel.find(params[:id]).messages.build
+    @messages = @channel.messages.order("created_at DESC")
+    @message = @messages.build
   end
 
-  def destroy
-    @channel = Channel.find(params[:id])
-    @channel.destroy
-    redirect_to channels_path
-  end
 end

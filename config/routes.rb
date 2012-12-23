@@ -1,12 +1,15 @@
 Tiramisu::Application.routes.draw do
   root :to => "channels#index"
-  resources :channels do
-    resources :messages
+  resources :channels, only: [:index, :create, :show]  do
+    resources :messages, only: [:create]
   end
 
   match 'authentication' => 'authentication#index'
   match 'authentication/login' => 'authentication#login'
   match 'authentication/logout' => 'authentication#logout'
+
+  post 'pusher/auth' => 'pusher#auth'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

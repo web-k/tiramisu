@@ -20,3 +20,15 @@
     color: gray;
   }
 }
+.members {
+  margin: 0;
+  padding: 12px;
+  border: solid 1px #eee;
+  li {
+    list-style: none;
+    color: blue;
+  }
+  li.myself {
+    color: gray;
+  }
+}
