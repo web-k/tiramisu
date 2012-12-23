@@ -1,3 +1,9 @@
+# encoding: utf-8
+
+前提 /^ログインしている$/ do
+  pending # express the regexp above with the code you wish you had
+end
+
 Given /^the following messages:$/ do |messages|
   Message.create!(messages.hashes)
 end
