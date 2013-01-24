@@ -1,3 +1,134 @@
+<script type="text/javascript" src="/assets/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="/assets/jquery-ui-1.9.2.custom.min.js"></script>
+<script type="text/javascript" src="/assets/jquery.ui.touch-punch.min.js"></script>
+<style TYPE="text/css">
+#area {
+	background-color: gray;
+	position: relative;
+	width: 800px;
+	height: 800px;
+}
+/* ここから下は仮。あとで画像に差し替える */
+#goban {
+	background-color: #f4ca5b;
+	padding : 50px;
+	width : 550px;
+}
+table {
+	border-color: black;
+}
+tr {
+	text-align: center;
+	height: 100px;
+}
+td {
+	width: 100px;
+}
+/* 仮ここまで */
+</style>
+<div id="area">
+<!-- ここから下は仮。あとで画像に差し替える -->
+<div id="goban">
+  <table border=1 cellspacing=0 cellpadding=2>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+<!-- 仮ここまで -->
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 0px;" src="/assets/black.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+<img class="draggable" style="position: absolute; top: 600px; left: 200px;" src="/assets/white.gif">
+</div>
+<script type="text/javascript">
+	/* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
+	$('.draggable').draggable({
+		/* ドラッグ可能範囲はid名"area"内のみ */
+		containment: '#area'
+	});
+	$('#area').droppable({
+		accept: '.draggable',
+		drop: function(e, ui) {
+			var dropItem = ui.draggable;
+			//alert('top' + dropItem.css('top') + '/left' + dropItem.css('left'));
+		}
+	});
+	/* 縦スクロール禁止 */
+	$(document).bind("touchmove", function()
+	{
+		event.preventDefault();
+	});
+</script>
+<!-- 仮のDD＆canvasエリアここまで -->
 <div class="row">
 <div class="span9">
 <%= render 'message_form' %>
