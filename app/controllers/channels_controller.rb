@@ -17,6 +17,7 @@ class ChannelsController < ApplicationController
 
   def show
     @channel = Channel.find(params[:id])
+    @channels = Channel.all
     @messages = @channel.messages.order("created_at DESC")
     @message = @messages.build
   end
