@@ -32,3 +32,20 @@
     color: gray;
   }
 }
+#graffiti {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#tools a {
+  border: 1px solid black;
+  color: black;
+  display: inline-block;
+  font-weight: bold;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 5px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+}
