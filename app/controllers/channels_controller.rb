@@ -8,6 +8,10 @@ class ChannelsController < ApplicationController
 
   def create
     @channel = Channel.new(params[:channel])
+    if params[:table].present? and
+         params[:table] == 'Go'
+      @channel.table = TableTemplate::Go.create
+    end
     if @channel.save
       redirect_to channels_path
     else
