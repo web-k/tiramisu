@@ -24,6 +24,7 @@ class ChannelsController < ApplicationController
     @channels = Channel.all
     @messages = @channel.messages.order("created_at DESC")
     @message = @messages.build
+    @table = @channel.table
   end
 
 end
