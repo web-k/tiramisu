@@ -67,10 +67,11 @@ function webkit_notifications(user_name, content) {
   switch(permission){
     case 0:
       var notification = webkitNotifications.createNotification('', user_name, content);
+      var notification_display_time = 10* 1000;
       notification.ondisplay = function(){
         setTimeout(function(){
           notification.cancel();
-        }, 2000);
+        }, notification_display_time);
       };
       notification.show();
       break;
