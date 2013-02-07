@@ -8,6 +8,10 @@ class ChannelsController < ApplicationController
 
   def create
     @channel = Channel.new(params[:channel])
+    if params[:table].present? and
+         params[:table] == 'Go'
+      @channel.table = TableTemplate::Go.create
+    end
     if @channel.save
       redirect_to channels_path
     else
@@ -17,6 +21,7 @@ class ChannelsController < ApplicationController
 
   def show
     @channel = Channel.find(params[:id])
+    @channels = Channel.all
     @messages = @channel.messages.order("created_at DESC")
     @message = @messages.build
   end
