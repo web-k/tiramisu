@@ -1,0 +1,10 @@
+<%= render 'message_form' %>
+<ul class="messages" data-channel="presence-channel-<%= @channel.id %>">
+<% @messages.each do |message| %>
+  <li>
+    <span class="time"><%= message.created_at.localtime.strftime('%H:%M') %></span>
+    <span class="username<%= message.user_name == session[:user_name] ? " myself" : "" %>">(<%= message.user_name.blank? ? 'unknown' : message.user_name %>)</span>
+    <span class="content"><%= message.content %></span>
+  </li>
+<% end %>
+</ul>
