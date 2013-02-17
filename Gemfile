@@ -29,12 +29,13 @@ gem "twitter-bootstrap-rails"
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'rspec', "~> 2.12.0"
   gem 'rspec-rails'
   gem 'execjs'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber'
-  gem 'cucumber-rails', '= 1.0.6', :require => false
+  gem 'cucumber-rails', :require => false
 end
 gem 'pusher'
 
