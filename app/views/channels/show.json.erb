@@ -1,0 +1,13 @@
+<%=
+  hash = { 
+    channel: @channel,
+    messages: @messages
+  }
+  if @channel.table.present?
+    hash[:table] = {
+      name: @channel.table.name,
+      items: @channel.table.items
+    }
+  end
+  raw hash.to_json
+%>
