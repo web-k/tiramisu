@@ -13,7 +13,7 @@
       </style>
       <img src="/assets/goban.png">
       <% @table.items.each do |item| %>
-        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="/assets/<%= item.kind %>.gif">
+        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="/assets/<%= item.kind %>.gif" data-item-id="<%= item.id %>">
       <% end %>
       <script type="text/javascript">
 	/* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
@@ -25,7 +25,9 @@
 		accept: '.draggable',
 		drop: function(e, ui) {
 			var dropItem = ui.draggable;
-			//alert('top' + dropItem.css('top') + '/left' + dropItem.css('left'));
+			var itemId = dropItem.data('item-id');
+			$.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
+				data: {position_x: ui.position.left, position_y: ui.position.top}});
 		}
 	});
 	/* 縦スクロール禁止 */
