@@ -9,15 +9,18 @@ $(function(){
     var pusher_connection_status = "initialized";
     pusher.connection.bind('connected', function() {
       if (pusher_connection_status == "disconnected") {
-        location.reload();
+        refresh_channel();
       }
       pusher_connection_status = "connected";
+      set_connection_status(true);
     });
     pusher.connection.bind('disconnected', function() {
       pusher_connection_status = "disconnected";
+      set_connection_status(false);
     });
     pusher.connection.bind('unavailable', function() {
       pusher_connection_status = "disconnected";
+      set_connection_status(false);
     });
 
     var channel = pusher.subscribe($('.messages').data('channel'));
@@ -47,6 +50,18 @@ $(function(){
   }
   check_webkit_notifications();
 });
+
+function set_connection_status(is_online) {
+  var $connection_status = $(".connection_status .status");
+  if (is_online) {
+      $connection_status.removeClass("offline").addClass("online");
+      $connection_status.text("オンライン");
+  } else {
+      $connection_status.removeClass("online").addClass("offline");
+      $connection_status.text("オフライン");
+      $("ul.members").children().remove();
+  }
+}
 
 function check_webkit_notifications() {
   if(typeof window.webkitNotifications == 'undefined'){return;}
@@ -83,12 +98,35 @@ function webkit_notifications(user_name, content) {
   }
 }
 
+function refresh_channel() {
+  $("ul.members").children().remove();
+  $.getJSON(window.location.pathname+".json", function (json) {
+    var messages = json.messages;
+    if (messages) {
+      var $messages = $("ul.messages");
+      $messages.children().remove();
+      for (var i=0; i<messages.length; i++) {
+        var message = messages[i];
+        var d = new Date(message.updated_at);
+        var message_date_hour = (d.getHours() < 10 ? '0' : '') + d.getHours();
+        var message_date_minites = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes();
+        var message_date = message_date_hour + ":" + message_date_minites;
+        var is_message_mine = ($('#my_name').text() == message.user_name ? true : false);
+        var username_class = "username" + (is_message_mine ? " myself" : "");
+        $messages.append('<li><span class="time">'+message_date+'</span><span class="'+username_class+'">('+message.user_name+')</span><span class="content">'+message.content+'</span></li>');
+      }
+    }
+  });
+}
+
 function add_member(member_id, member_info) {
+  var $members = $('.members');
+  if ($members.find("li[data-member-id='"+member_id+"']").size() > 0) { return; }
   var $member = $('<li>' + member_info.name + '</li>');
+  $member.attr('data-member-id', member_id);
   if ($('#my_name').text() == member_info.name) {
     $member.addClass('myself');
   }
-  var $members = $('.members');
   $members.append($member);
   var $members_li = $members.find('li');
   $members.html($members_li.sort(function(a,b) {
