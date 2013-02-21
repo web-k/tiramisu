@@ -2,9 +2,6 @@
   <div class="span9<%= @table.present? ? ' go' : '' %>">
     <% if @table.present? %>
     <div id="table_area">
-      <script type="text/javascript" src="/assets/jquery-1.8.3.js"></script>
-      <script type="text/javascript" src="/assets/jquery-ui-1.9.2.custom.min.js"></script>
-      <script type="text/javascript" src="/assets/jquery.ui.touch-punch.min.js"></script>
       <style TYPE="text/css">
         #table_area {
           position: relative;
@@ -15,27 +12,6 @@
       <% @table.items.each do |item| %>
         <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="/assets/<%= item.kind %>.gif" data-item-id="<%= item.id %>">
       <% end %>
-      <script type="text/javascript">
-	/* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
-	$('.draggable').draggable({
-		/* ドラッグ可能範囲はid名"area"内のみ */
-		containment: '#table_area'
-	});
-	$('#table_area').droppable({
-		accept: '.draggable',
-		drop: function(e, ui) {
-			var dropItem = ui.draggable;
-			var itemId = dropItem.data('item-id');
-			$.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
-				data: {position_x: ui.position.left, position_y: ui.position.top}});
-		}
-	});
-	/* 縦スクロール禁止 */
-	$(document).bind("touchmove", function()
-	{
-		event.preventDefault();
-	});
-      </script>
     </div>
     <% else %>
     <%= render 'messages' %>
