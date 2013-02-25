@@ -47,16 +47,15 @@ $(function(){
         webkit_notifications(data.message.user_name, data.message.content);
       }
     });
-    channel.bind('client-item_drag', function(data) {
-      $(".draggable[data-item-id='" + data.item_id + "']").css('top', data.position.top + 'px')
-                   .css('left', data.position.left + 'px');
-    });
+    channel.bind('item_move', item_move);
+    channel.bind('client-item_drag', item_move);
+
     /* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
     $('.draggable').draggable({
       /* ドラッグ可能範囲はid名"table_area"内のみ */
       containment: '#table_area',
       drag: function(e, ui) {
-        channel.trigger('client-item_drag', {item_id:ui.helper.data('item-id'), position:ui.position});
+        channel.trigger('client-item_drag', {user_id:channel.members.me.id, item_id:ui.helper.data('item-id'), position:ui.position});
       }
     });
     $('#table_area').droppable({
@@ -75,6 +74,14 @@ $(function(){
   }
   check_webkit_notifications();
 });
+
+function item_move(data) {
+  var my_user_id = $("ul.members>li.myself").data("member-id");
+  if (data.user_id != my_user_id) {
+    $(".draggable[data-item-id='" + data.item_id + "']").css('top', data.position.top + 'px')
+                 .css('left', data.position.left + 'px');
+  }
+}
 
 function set_connection_status(is_online) {
   var $connection_status = $(".connection_status .status");
