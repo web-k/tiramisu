@@ -55,7 +55,7 @@ $(function(){
       /* ドラッグ可能範囲はid名"table_area"内のみ */
       containment: '#table_area',
       drag: function(e, ui) {
-        channel.trigger('client-item_drag', {item_id:ui.helper.data('item-id'), position:ui.position});
+        channel.trigger('client-item_drag', {user_id:channel.members.me.id, item_id:ui.helper.data('item-id'), position:ui.position});
       }
     });
     $('#table_area').droppable({
@@ -76,8 +76,11 @@ $(function(){
 });
 
 function item_move(data) {
-  $(".draggable[data-item-id='" + data.item_id + "']").css('top', data.position.top + 'px')
-               .css('left', data.position.left + 'px');
+  var my_user_id = $("ul.members>li.myself").data("member-id");
+  if (data.user_id != my_user_id) {
+    $(".draggable[data-item-id='" + data.item_id + "']").css('top', data.position.top + 'px')
+                 .css('left', data.position.left + 'px');
+  }
 }
 
 function set_connection_status(is_online) {
