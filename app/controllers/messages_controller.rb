@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   def create
     render(status: :forbidden, text: 'Invalid message') and return if (params[:message].blank? or params[:message][:content].blank?)
     @channel = Channel.find(params[:channel_id])
-    @message = @channel.messages.create(params[:message])
+    @message = @channel.messages.create(params.require(:message).permit(:content))
     @message.user_name = session[:user_name] 
 
       if @message.save

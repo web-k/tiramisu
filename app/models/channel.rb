@@ -1,5 +1,5 @@
 class Channel < ActiveRecord::Base
-  attr_accessible :name
+  include ActiveModel::ForbiddenAttributesProtection
   has_many :messages
   belongs_to :table
 end
