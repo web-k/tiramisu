@@ -1,3 +1,21 @@
+var drag_item_state = {
+  current: {
+    id: undefined,
+    x: undefined,
+    y: undefined
+  },
+  last: {
+    id: undefined,
+    x: undefined,
+    y: undefined
+  }
+};
+function update_item_state(id, x, y) {
+  drag_item_state.current.id = id;
+  drag_item_state.current.x = x;
+  drag_item_state.current.y = y;
+}
+
 $('form.new_message').on('ajax:success', function(){
   $(this).find("#message_content").val("");
 });
@@ -51,13 +69,34 @@ $(function(){
     channel.bind('client-item_drag', item_move);
 
     /* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
-    $('.draggable').draggable({
+    var $draggable = $('.draggable');
+    $draggable.draggable({
       /* ドラッグ可能範囲はid名"table_area"内のみ */
       containment: '#table_area',
       drag: function(e, ui) {
-        channel.trigger('client-item_drag', {user_id:channel.members.me.id, item_id:ui.helper.data('item-id'), position:ui.position});
+        update_item_state(ui.helper.data('item-id'), ui.position.left, ui.position.top);
       }
     });
+    if ($draggable.size() > 0) {
+      setInterval(function(){
+        if(drag_item_state.current.id !== drag_item_state.last.id ||
+            drag_item_state.current.x !== drag_item_state.last.x ||
+            drag_item_state.current.y !== drag_item_state.last.y){
+          drag_item_state.last.id = drag_item_state.current.id;
+          drag_item_state.last.x = drag_item_state.current.x;
+          drag_item_state.last.y = drag_item_state.current.y;
+
+          channel.trigger('client-item_drag', {
+            user_id: channel.members.me.id,
+            item_id: drag_item_state.last.id,
+            position: {
+              left: drag_item_state.last.x,
+              top: drag_item_state.last.y
+            }
+          });
+        }
+      }, 300);
+    }
     $('#table_area').droppable({
       accept: '.draggable',
         drop: function(e, ui) {
@@ -75,11 +114,16 @@ $(function(){
   check_webkit_notifications();
 });
 
+
 function item_move(data) {
   var my_user_id = $("ul.members>li.myself").data("member-id");
   if (data.user_id != my_user_id) {
-    $(".draggable[data-item-id='" + data.item_id + "']").css('top', data.position.top + 'px')
-                 .css('left', data.position.left + 'px');
+    $(".draggable[data-item-id='" + data.item_id + "']").animate({
+        top: data.position.top + 'px',
+        left: data.position.left + 'px'
+    }, {
+      duration: 300
+    });
   }
 }
 
