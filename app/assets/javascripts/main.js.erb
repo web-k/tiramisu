@@ -177,7 +177,12 @@ function webkit_notifications(user_name, content) {
 function refresh_channel() {
   $("ul.members").children().remove();
   $.getJSON(window.location.pathname+".json", function (json) {
-    var messages = json.messages;
+    refresh_messages(json.messages);
+    refresh_table(json.table);
+  });
+}
+
+function refresh_messages(messages) {
     if (messages) {
       var $messages = $("ul.messages");
       $messages.children().remove();
@@ -192,7 +197,17 @@ function refresh_channel() {
         $messages.append('<li><span class="time">'+message_date+'</span><span class="'+username_class+'">('+message.user_name+')</span><span class="content">'+message.content+'</span></li>');
       }
     }
-  });
+}
+
+function refresh_table(table) {
+  if (!table || !table.items) { return; }
+  var items = table.items;
+  for (var i=0; i<items.length; i++) {
+    var item = items[i];
+    $("img[data-item-id="+item.id+"]")
+      .css("left", item.position_x+"px")
+      .css("top", item.position_y+"px");
+  }
 }
 
 function add_member(member_id, member_info) {
