@@ -184,7 +184,7 @@ function initialize_table_upside() {
     var channel_id = $current_channel.data('channel-id');
     var tu = localStorage.getItem('channel-'+channel_id+'-table-upside');
     if (tu) {
-      if(tu === 'down') { setTimeout(function(){toggle_table_upside();}, 100); } 
+      if(tu === 'down') { setTimeout(function(){toggle_table_upside();}, 300); }
     }
     var $upside_button = $('<button class="btn btn-small" id="table_upside">テーブル回転</button>');
     $('p.logout').append($upside_button);
