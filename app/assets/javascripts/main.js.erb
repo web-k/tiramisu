@@ -107,7 +107,7 @@ $(function(){
         }
     });
     /* 縦スクロール禁止 */
-    $(document).bind("touchmove", function() {
+    $(".draggable").bind("touchmove", function() {
       event.preventDefault();
     });
   }
