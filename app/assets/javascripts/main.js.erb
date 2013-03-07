@@ -92,7 +92,8 @@ $(function(){
             position: {
               left: drag_item_state.last.x,
               top: drag_item_state.last.y
-            }
+            },
+            latest_moving_user_name: $('#my_name').text()
           });
         }
       }, 300);
@@ -103,7 +104,7 @@ $(function(){
           var dropItem = ui.draggable;
           var itemId = dropItem.data('item-id');
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
-                  data: {position_x: ui.position.left, position_y: ui.position.top}});
+                  data: {position_x: ui.position.left, position_y: ui.position.top, latest_moving_user_name: $('#my_name').text()}});
         }
     });
     /* 縦スクロール禁止 */
@@ -123,6 +124,12 @@ function item_move(data) {
         left: data.position.left + 'px'
     }, {
       duration: 300
+    });
+    $(".tooltip").remove();
+    $(".draggable[data-item-id='" + data.item_id + "']").after("<div class='tooltip'>" + data.latest_moving_user_name + "</div>");
+    $(".tooltip").css({
+        top: data.position.top + 'px',
+        left: data.position.left + 30 + 'px'
     });
   }
 }
