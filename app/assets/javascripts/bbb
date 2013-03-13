@@ -105,7 +105,6 @@ $(function(){
           var itemId = dropItem.data('item-id');
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
                   data: {position_x: ui.position.left, position_y: ui.position.top, latest_moving_user_name: $('#my_name').text()}});
-          set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
         }
     });
     /* 縦スクロール禁止 */
@@ -126,17 +125,13 @@ function item_move(data) {
     }, {
       duration: 300
     });
-    set_label(data.item_id, data.latest_moving_user_name, data.position.top, data.position.left);
-  }
-}
-
-function set_label(id, name, top, left) {
-    $(".label").remove();
-    $(".draggable[data-item-id='" + id + "']").after("<div class='label'>" + name + "</div>");
-    $(".label").css({
-        top: top + 'px',
-        left: left + 30 + 'px'
+    $(".tooltip").remove();
+    $(".draggable[data-item-id='" + data.item_id + "']").after("<div class='tooltip'>" + data.latest_moving_user_name + "</div>");
+    $(".tooltip").css({
+        top: data.position.top + 'px',
+        left: data.position.left + 30 + 'px'
     });
+  }
 }
 
 function set_connection_status(is_online) {
