@@ -105,7 +105,7 @@ $(function(){
           var itemId = dropItem.data('item-id');
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
                   data: {position_x: ui.position.left, position_y: ui.position.top, latest_moving_user_name: $('#my_name').text()}});
-          set_tooltip(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
+          set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
         }
     });
     /* 縦スクロール禁止 */
@@ -126,14 +126,14 @@ function item_move(data) {
     }, {
       duration: 300
     });
-    set_tooltip(data.item_id, data.latest_moving_user_name, data.position.top, data.position.left);
+    set_label(data.item_id, data.latest_moving_user_name, data.position.top, data.position.left);
   }
 }
 
-function set_tooltip(id, name, top, left) {
-    $(".tooltip").remove();
-    $(".draggable[data-item-id='" + id + "']").after("<div class='tooltip'>" + name + "</div>");
-    $(".tooltip").css({
+function set_label(id, name, top, left) {
+    $(".label").remove();
+    $(".draggable[data-item-id='" + id + "']").after("<div class='label'>" + name + "</div>");
+    $(".label").css({
         top: top + 'px',
         left: left + 30 + 'px'
     });

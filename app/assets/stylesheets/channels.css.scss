@@ -33,7 +33,8 @@
     }
   }
 }
-.tooltip{
-  opacity: 1;
-  background-color: #cccccc;
+.label,
+.label-info {
+  position: absolute;
 }
+
