@@ -4,7 +4,8 @@
     <h3>サインイン</h3>
   </div>
   <div class="modal-body">
-    <%= form_tag({:controller => 'authentication', :action => 'login'}, {class: 'form-inline'}) do %>
+    <%= form_tag({controller: 'authentication', action: 'login'}, {class: 'form-inline'}) do %>
+    <%= hidden_field_tag :callback, @callback_url %>
     <%= text_field_tag 'user_name'%>
     <%= submit_tag 'Login', class: 'btn' %>
     <% end %>
