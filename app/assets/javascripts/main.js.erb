@@ -82,6 +82,8 @@ $(function(){
       containment: '#table_area',
       drag: function(e, ui) {
         update_item_state(ui.helper.data('item-id'), ui.position.left, ui.position.top);
+        $(".active").removeClass("active");
+        ui.helper.addClass("active");
       }
     });
     if ($draggable.size() > 0) {
@@ -130,6 +132,8 @@ function item_move(data) {
   if (data.user_id != my_user_id) {
     var $item = $(".draggable[data-item-id='" + data.item_id + "']");
     var showing_item_position = toggle_position($item, data.position.top, data.position.left);
+    $(".active").removeClass("active");
+    $item.addClass('active');
     $item.animate({
         top: showing_item_position.top + 'px',
         left: showing_item_position.left + 'px'
