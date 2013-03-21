@@ -16,10 +16,17 @@ function update_item_state(id, x, y) {
   drag_item_state.current.y = y;
 }
 
-$('form.new_message').on('ajax:success', function(){
-  $(this).find("#message_content").val("");
-});
 $(function(){
+  $('form.new_message')
+    .on('ajax:beforeSend', function(event) {
+      $(this).find("#message_content").prop("disabled", true);
+    })
+    .on('ajax:success', function() {
+      $(this).find("#message_content").val("");
+    })
+    .on('ajax:complete', function() {
+      $(this).find("#message_content").prop("disabled", false);
+    });
   if ($('.messages').size() > 0) {
 
     var pusher = new Pusher('<%= Pusher.key %>');
