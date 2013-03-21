@@ -86,13 +86,12 @@ $(function(){
           drag_item_state.last.x = drag_item_state.current.x;
           drag_item_state.last.y = drag_item_state.current.y;
 
+          var $item = $("img[data-item-id='"+drag_item_state.last.id+"']");
+          var original_item_position = toggle_item_position($item);
           channel.trigger('client-item_drag', {
             user_id: channel.members.me.id,
             item_id: drag_item_state.last.id,
-            position: {
-              left: drag_item_state.last.x,
-              top: drag_item_state.last.y
-            }
+            position: original_item_position
           });
         }
       }, 300);
@@ -102,8 +101,9 @@ $(function(){
         drop: function(e, ui) {
           var dropItem = ui.draggable;
           var itemId = dropItem.data('item-id');
+          var original_position = toggle_item_position(dropItem);
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
-                  data: {position_x: ui.position.left, position_y: ui.position.top}});
+                  data: {position_x: original_position.left, position_y: original_position.top}});
         }
     });
     /* 縦スクロール禁止 */
@@ -112,15 +112,18 @@ $(function(){
     });
   }
   check_webkit_notifications();
+  if ($('#table_area').size()>0) { initialize_table_upside(); }
 });
 
 
 function item_move(data) {
   var my_user_id = $("ul.members>li.myself").data("member-id");
   if (data.user_id != my_user_id) {
-    $(".draggable[data-item-id='" + data.item_id + "']").animate({
-        top: data.position.top + 'px',
-        left: data.position.left + 'px'
+    var $item = $(".draggable[data-item-id='" + data.item_id + "']");
+    var showing_item_position = toggle_position($item, data.position.top, data.position.left);
+    $item.animate({
+        top: showing_item_position.top + 'px',
+        left: showing_item_position.left + 'px'
     }, {
       duration: 300
     });
@@ -174,6 +177,76 @@ function webkit_notifications(user_name, content) {
   }
 }
 
+var table_upside = 'up';
+function initialize_table_upside() {
+  var $current_channel = $('.channels .here');
+  if ($current_channel.size()>0) {
+    var channel_id = $current_channel.data('channel-id');
+    var tu = localStorage.getItem('channel-'+channel_id+'-table-upside');
+    if (tu) {
+      if(tu === 'down') { setTimeout(function(){toggle_table_upside();}, 300); }
+    }
+    var $upside_button = $('<button class="btn btn-small" id="table_upside">テーブル回転</button>');
+    $('p.logout').append($upside_button);
+    $upside_button.click(toggle_table_upside);
+  }
+}
+function toggle_table_upside() {
+  var $table_area = $('#table_area');
+  var table_width = $table_area.width();
+  var table_height = $table_area.height();
+  var $table_area_images = $('#table_area img');
+  var $items = $table_area_images.filter('.draggable');
+  if (table_upside === 'up') {
+    table_upside = 'down';
+    $table_area_images.css('transform', 'rotate(180deg)');
+  } else {
+    table_upside = 'up';
+    $table_area_images.css('transform', 'rotate(0deg)');
+  }
+  toggle_item_upside($items, table_width, table_height);
+  localStorage.setItem('channel-'+$('.channels .here').data('channel-id')+'-table-upside', table_upside);
+}
+function toggle_item_upside($items, table_width, table_height) {
+  $items.each(function() {
+    var $item = $(this);
+    var item_width = $item.width();
+    var item_height = $item.height();
+    var item_top = parseInt($item.css('top'));
+    var item_left = parseInt($item.css('left')); 
+    $item.animate({
+      top: (table_height - item_top - item_height) + 'px',
+      left: (table_width - item_left - item_width) + 'px'
+    });
+  });
+}
+function toggle_item_position($item) {
+  return toggle_position($item, parseInt($item.css('top')), parseInt($item.css('left')));
+}
+function toggle_position($item, top, left) {
+  var $table_area = $('#table_area');
+  var table = {
+    width: $table_area.width(),
+    height: $table_area.height()
+  };
+  var item = {
+    width: $item.width(),
+    height: $item.height(),
+  };
+  var tp = {
+    top: 0,
+    left: 0
+  };
+  if (table_upside === 'up') {
+    tp.top = top;
+    tp.left = left;
+  } else {
+    tp.top = table.height - top - item.height;
+    tp.left = table.width - left - item.width;
+  }
+  return tp;
+}
+
 function refresh_channel() {
   $("ul.members").children().remove();
   $.getJSON(window.location.pathname+".json", function (json) {
@@ -204,9 +277,12 @@ function refresh_table(table) {
   var items = table.items;
   for (var i=0; i<items.length; i++) {
     var item = items[i];
-    $("img[data-item-id="+item.id+"]")
-      .css("left", item.position_x+"px")
-      .css("top", item.position_y+"px");
+    var $item = $("img[data-item-id="+item.id+"]");
+    var showing_item_position = toggle_position($item, item.position_y, item.position_x);
+    $item.animate({
+      top: showing_item_position.top+"px",
+      left: showing_item_position.left+"px"
+    });
   }
 }
 
