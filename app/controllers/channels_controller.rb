@@ -8,9 +8,9 @@ class ChannelsController < ApplicationController
 
   def create
     @channel = Channel.new(params[:channel])
-    if params[:table].present? and
-         params[:table] == 'Go'
-      @channel.table = TableTemplate::Go.create
+    if params[:table].present?
+      template = TableTemplate.find params[:table]
+      @channel.table = template.create if template.present?
     end
     if @channel.save
       redirect_to channels_path

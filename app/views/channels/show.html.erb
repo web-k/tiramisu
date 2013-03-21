@@ -8,9 +8,9 @@
 	  width: 700px;
         }
       </style>
-      <img src="/assets/goban.png">
+      <%= image_tag 'goban'+(@table.name=='Go6ro' ? '6': '')+'.png', class: "ban" %>
       <% @table.items.each do |item| %>
-        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="/assets/<%= item.kind %>.gif" data-item-id="<%= item.id %>">
+        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="<%= asset_path item.kind+'.gif' %>" data-item-id="<%= item.id %>">
       <% end %>
     </div>
     <% else %>
@@ -27,7 +27,7 @@
 
     <ul class="channels channel_list">
       <% @channels.each do |channel| %>
-      <li class="channel_name<%= channel.name == @channel.name ? " here" : "" %>"><%= link_to channel.name, channel_path(channel) %></li>
+      <li class="channel_name<%= channel.name == @channel.name ? " here" : "" %>" data-channel-id="<%= @channel.id.to_s %>"><%= link_to channel.name, channel_path(channel) %></li>
       <% end %>
       <li><%= link_to 'To top', root_path %></li>
     </ul>
