@@ -27,7 +27,7 @@
 
     <ul class="channels channel_list">
       <% @channels.each do |channel| %>
-      <li class="channel_name<%= channel.name == @channel.name ? " here" : "" %>"><%= link_to channel.name, channel_path(channel) %></li>
+      <li class="channel_name<%= channel.name == @channel.name ? " here" : "" %>" data-channel-id="<%= @channel.id.to_s %>"><%= link_to channel.name, channel_path(channel) %></li>
       <% end %>
       <li><%= link_to 'To top', root_path %></li>
     </ul>
