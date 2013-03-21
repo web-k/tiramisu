@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate
-    redirect_to(:controller => 'authentication', :action => 'index') and return false unless login?
+    unless login?
+      callback_url = (request.fullpath.present? && request.fullpath != '/') ? request.fullpath : nil
+      redirect_to controller: 'authentication', action: 'index', callback: callback_url
+      return false
+    end
   end
 end
