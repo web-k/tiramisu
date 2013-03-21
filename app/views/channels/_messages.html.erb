@@ -4,7 +4,7 @@
   <li>
     <span class="time"><%= message.created_at.localtime.strftime('%H:%M') %></span>
     <span class="username<%= message.user_name == session[:user_name] ? " myself" : "" %>">(<%= message.user_name.blank? ? 'unknown' : message.user_name %>)</span>
-    <span class="content"><%= message.content %></span>
+    <span class="content"><%= auto_link(message.content, :html => { :target => "_blank" }) %></span>
   </li>
 <% end %>
 </ul>
