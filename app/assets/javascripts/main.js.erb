@@ -98,7 +98,8 @@ $(function(){
           channel.trigger('client-item_drag', {
             user_id: channel.members.me.id,
             item_id: drag_item_state.last.id,
-            position: original_item_position
+            position: original_item_position,
+            latest_moving_user_name: $('#my_name').text()
           });
         }
       }, 300);
@@ -110,7 +111,8 @@ $(function(){
           var itemId = dropItem.data('item-id');
           var original_position = toggle_item_position(dropItem);
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
-                  data: {position_x: original_position.left, position_y: original_position.top}});
+                  data: {position_x: original_position.left, position_y: original_position.top, latest_moving_user_name: $('#my_name').text()}});
+          set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
         }
     });
     /* 縦スクロール禁止 */
@@ -134,7 +136,17 @@ function item_move(data) {
     }, {
       duration: 300
     });
+    set_label(data.item_id, data.latest_moving_user_name, showing_item_position.top, showing_item_position.left);
   }
+}
+
+function set_label(id, name, top, left) {
+    $(".label").remove();
+    $(".draggable[data-item-id='" + id + "']").after("<div class='label'>" + name + "</div>");
+    $(".label").css({
+        top: top + 'px',
+        left: left + 30 + 'px'
+    });
 }
 
 function set_connection_status(is_online) {
@@ -221,11 +233,25 @@ function toggle_item_upside($items, table_width, table_height) {
     var item_height = $item.height();
     var item_top = parseInt($item.css('top'));
     var item_left = parseInt($item.css('left')); 
+    var top = table_height - item_top - item_height;
+    var left = table_width - item_left - item_width;
     $item.animate({
-      top: (table_height - item_top - item_height) + 'px',
-      left: (table_width - item_left - item_width) + 'px'
+      top: top + 'px',
+      left: left + 'px'
     });
   });
+  var $label = $('.label');
+  if ($label.size()>0) {
+    var $label_item = $label.prev();
+    var label_item_id = $label_item.data('item-id');
+    var item_width = $label_item.width();
+    var item_height = $label_item.height();
+    var item_top = parseInt($label_item.css('top'));
+    var item_left = parseInt($label_item.css('left')); 
+    var top = table_height - item_top - item_height;
+    var left = table_width - item_left - item_width;
+    set_label(label_item_id, $('#my_name').text(), top, left);
+  }
 }
 function toggle_item_position($item) {
   return toggle_position($item, parseInt($item.css('top')), parseInt($item.css('left')));
