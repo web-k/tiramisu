@@ -300,7 +300,8 @@ function refresh_messages(messages) {
         var message_date = message_date_hour + ":" + message_date_minites;
         var is_message_mine = ($('#my_name').text() == message.user_name ? true : false);
         var username_class = "username" + (is_message_mine ? " myself" : "");
-        $messages.append('<li><span class="time">'+message_date+'</span><span class="'+username_class+'">('+message.user_name+')</span><span class="content">'+message.content+'</span></li>');
+        var message_content = message.content.replace(/(https?:\/\/[\x21-\x7e]+)/gi, "<a href='$1' target='_blank'>$1</a>");
+        $messages.append('<li><span class="time">'+message_date+'</span><span class="'+username_class+'">('+message.user_name+')</span><span class="content">'+message_content+'</span></li>');
       }
     }
 }

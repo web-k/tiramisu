@@ -105,6 +105,8 @@ GEM
       activesupport (= 3.2.13)
       bundler (~> 1.0)
       railties (= 3.2.13)
+    rails_autolink (1.0.9)
+      rails (~> 3.1)
     railties (3.2.13)
       actionpack (= 3.2.13)
       activesupport (= 3.2.13)
@@ -184,6 +186,7 @@ DEPENDENCIES
   pg
   pusher
   rails
+  rails_autolink
   rspec (~> 2.12.0)
   rspec-rails
   sass-rails
