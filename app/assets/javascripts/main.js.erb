@@ -332,6 +332,11 @@ function refresh_table(table) {
       left: showing_item_position.left+"px"
     });
   }
+  var latest_moving_item = table.latest_moving_item;
+  if (latest_moving_item) {
+    var showing_item_position = toggle_position($("img[data-item-id="+latest_moving_item.id+"]"), latest_moving_item.position_y, latest_moving_item.position_x);
+    set_label(latest_moving_item.id, latest_moving_item.latest_moving_user_name, showing_item_position.top, showing_item_position.left);
+  }
 }
 
 function add_member(member_id, member_info) {
