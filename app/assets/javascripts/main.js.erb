@@ -145,12 +145,22 @@ function item_move(data) {
 }
 
 function set_label(id, name, top, left) {
-    $(".label").remove();
-    $(".draggable[data-item-id='" + id + "']").after("<div class='label'>" + name + "</div>");
-    $(".label").css({
+    var set_position = {
         top: top + 'px',
         left: left + 30 + 'px'
-    });
+    };
+    var $set_label_item = $(".draggable[data-item-id='" + id + "']");
+    var $set_label_item_next = $set_label_item.next();
+    if ($set_label_item_next.hasClass('label') && $set_label_item_next.text() == name) {
+      var $label = $set_label_item_next;
+      $label.animate(set_position, {
+        duration: 300
+      });
+    } else {
+      $(".label").remove();
+      $set_label_item.after("<div class='label'>" + name + "</div>");
+      $(".label").css(set_position);
+    }
 }
 
 function set_connection_status(is_online) {
@@ -321,6 +331,11 @@ function refresh_table(table) {
       top: showing_item_position.top+"px",
       left: showing_item_position.left+"px"
     });
+  }
+  var latest_moving_item = table.latest_moving_item;
+  if (latest_moving_item) {
+    var showing_item_position = toggle_position($("img[data-item-id="+latest_moving_item.id+"]"), latest_moving_item.position_y, latest_moving_item.position_x);
+    set_label(latest_moving_item.id, latest_moving_item.latest_moving_user_name, showing_item_position.top, showing_item_position.left);
   }
 }
 

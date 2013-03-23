@@ -25,6 +25,9 @@ class ChannelsController < ApplicationController
     @messages = @channel.messages.order("created_at DESC")
     @message = @messages.build
     @table = @channel.table
+    if @table.present?
+      @latest_moving_item = @table.items.where('latest_moving_user_name IS NOT NULL').order('updated_at DESC').first
+    end
   end
 
 end

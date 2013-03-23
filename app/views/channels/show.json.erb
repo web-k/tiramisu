@@ -6,7 +6,8 @@
   if @channel.table.present?
     hash[:table] = {
       name: @channel.table.name,
-      items: @channel.table.items
+      items: @channel.table.items,
+      latest_moving_item: @latest_moving_item
     }
   end
   raw hash.to_json
