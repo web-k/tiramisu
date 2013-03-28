@@ -72,7 +72,7 @@ $(function(){
         webkit_notifications(data.message.user_name, data.message.content);
       }
     });
-    channel.bind('item_move', item_move);
+    channel.bind('item_move', show_item);
     channel.bind('client-item_drag', item_move);
 
     /* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
@@ -128,6 +128,11 @@ $(function(){
   if ($('#table_area').size()>0) { initialize_table_upside(); }
 });
 
+
+function show_item(data) {
+  item_move(data);
+  $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
+}
 
 function item_move(data) {
   var my_user_id = $("ul.members>li.myself").data("member-id");
