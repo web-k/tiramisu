@@ -131,6 +131,7 @@ $(function(){
 
 function show_item(data) {
   item_move(data);
+  document.getElementById("go_sound").play();
   $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
 }
 
