@@ -125,14 +125,17 @@ $(function(){
     });
   }
   check_webkit_notifications();
-  if ($('#table_area').size()>0) { initialize_table_upside(); }
+  if ($('#table_area').size()>0) { initialize_table_upside(); initialize_sound_onoff();}
 });
 
 
 function show_item(data) {
   item_move(data);
-  document.getElementById("go_sound").play();
   $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
+  var s = document.getElementById('go_sound');
+  if (s.muted != true) {
+    s.play();
+  }
 }
 
 function item_move(data) {
@@ -301,6 +304,36 @@ function toggle_position($item, top, left) {
     tp.left = table.width - left - item.width;
   }
   return tp;
+}
+
+var state_go_sound = 'off';
+function initialize_sound_onoff() {
+  var sound_onoff_str, class_str, $onoff_button;
+  if (state_go_sound == "off") {
+    sound_onoff_str = "sound on";
+//    class_str = "icon-volume-up";
+  } else {
+    sound_onoff_str = "sound off ";
+//    class_str = "icon-volume-off ";
+  }
+  $onoff_button = $('<button class="btn btn-small" id="sound_onoff" onclick="change_soundonoff(this)"> ' + sound_onoff_str + '</button>');
+  $('p.logout').append($onoff_button);
+}
+function change_soundonoff(item) {
+  var s = document.getElementById("go_sound");
+  if (state_go_sound == 'off') {
+    s.muted = false;
+//    item.classList.remove("icon-volume-up");
+    state_go_sound = 'on';
+    item.textContent = "sound off";
+//    item.classList.add("icon-volume-off");
+  } else {
+    s.muted = true;
+//    item.classList.remove("icon-volume-off");
+    state_go_sound = 'off';
+    item.textContent = "sound on";
+//    item.classList.add("icon-volume-up");
+  }
 }
 
 function refresh_channel() {
