@@ -117,6 +117,10 @@ $(function(){
                   data: {position_x: original_position.left, position_y: original_position.top, latest_moving_user_name: $('#my_name').text()}});
           set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
           $('.ui-draggable-dragging').fadeTo(1, 1);
+          var s = $('#go_sound').get(0);
+          if (s.muted != true) {
+            s.play();
+          }
         }
     });
     /* 縦スクロール禁止 */
