@@ -132,7 +132,7 @@ $(function(){
 function show_item(data) {
   item_move(data);
   $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
-  var s = document.getElementById('go_sound');
+  var s = $('#go_sound').get(0);
   if (s.muted != true) {
     s.play();
   }
@@ -306,10 +306,10 @@ function toggle_position($item, top, left) {
   return tp;
 }
 
-var state_go_sound = 'off';
+var state_go_sound = 'on';
 function initialize_sound_onoff() {
   var sound_onoff_str, class_str, $onoff_button;
-  if (state_go_sound == "off") {
+  if (state_go_sound == 'off') {
     sound_onoff_str = "sound on";
 //    class_str = "icon-volume-up";
   } else {
@@ -320,7 +320,7 @@ function initialize_sound_onoff() {
   $('p.logout').append($onoff_button);
 }
 function change_soundonoff(item) {
-  var s = document.getElementById("go_sound");
+  var s = $('#go_sound').get(0);
   if (state_go_sound == 'off') {
     s.muted = false;
 //    item.classList.remove("icon-volume-up");
