@@ -10,7 +10,7 @@ gem 'coffee-rails'
 gem 'uglifier'
 
 gem 'jquery-rails'
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '2.2.6'
 gem "rails_autolink"
 
 # To use ActiveModel has_secure_password
@@ -40,8 +40,8 @@ group :development, :test do
 end
 gem 'pusher'
 
-gem 'therubyracer', '0.11.0beta8'
-gem 'libv8', '3.11.8.4'
+gem 'libv8'
+gem 'therubyracer', '~> 0.11.4'
 
 group :production do
   gem 'pg'
