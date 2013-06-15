@@ -72,7 +72,7 @@ $(function(){
         webkit_notifications(data.message.user_name, data.message.content);
       }
     });
-    channel.bind('item_move', item_move);
+    channel.bind('item_move', show_item);
     channel.bind('client-item_drag', item_move);
 
     /* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
@@ -84,6 +84,7 @@ $(function(){
         update_item_state(ui.helper.data('item-id'), ui.position.left, ui.position.top);
         $(".active").removeClass("active");
         ui.helper.addClass("active");
+        $('.ui-draggable-dragging').fadeTo(1, 0.6);
       }
     });
     if ($draggable.size() > 0) {
@@ -115,6 +116,8 @@ $(function(){
           $.ajax({type: "POST", url: "/items/" + itemId + "/event/move",
                   data: {position_x: original_position.left, position_y: original_position.top, latest_moving_user_name: $('#my_name').text()}});
           set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
+          $('.ui-draggable-dragging').fadeTo(1, 1);
+          $('#go_sound').get(0).play();
         }
     });
     /* 縦スクロール禁止 */
@@ -123,9 +126,15 @@ $(function(){
     });
   }
   check_webkit_notifications();
-  if ($('#table_area').size()>0) { initialize_table_upside(); }
+  if ($('#table_area').size()>0) { initialize_table_upside(); initialize_sound_onoff();}
 });
 
+
+function show_item(data) {
+  item_move(data);
+  $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
+  $('#go_sound').get(0).play();
+}
 
 function item_move(data) {
   var my_user_id = $("ul.members>li.myself").data("member-id");
@@ -141,6 +150,7 @@ function item_move(data) {
       duration: 300
     });
     set_label(data.item_id, data.latest_moving_user_name, showing_item_position.top, showing_item_position.left);
+    $item.fadeTo(1, 0.6);
   }
 }
 
@@ -292,6 +302,30 @@ function toggle_position($item, top, left) {
     tp.left = table.width - left - item.width;
   }
   return tp;
+}
+
+var state_go_sound = 'on';
+function initialize_sound_onoff() {
+  var sound_onoff_str, class_str, $onoff_button;
+  if (state_go_sound == 'off') {
+    sound_onoff_str = "sound on";
+  } else {
+    sound_onoff_str = "sound off ";
+  }
+  $onoff_button = $('<button class="btn btn-small" id="sound_onoff" onclick="change_soundonoff(this)"> ' + sound_onoff_str + '</button>');
+  $('p.logout').append($onoff_button);
+}
+function change_soundonoff(item) {
+  var s = $('#go_sound').get(0);
+  if (state_go_sound == 'off') {
+    s.muted = false;
+    state_go_sound = 'on';
+    item.textContent = "sound off";
+  } else {
+    s.muted = true;
+    state_go_sound = 'off';
+    item.textContent = "sound on";
+  }
 }
 
 function refresh_channel() {
