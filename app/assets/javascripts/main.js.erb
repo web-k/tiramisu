@@ -117,10 +117,7 @@ $(function(){
                   data: {position_x: original_position.left, position_y: original_position.top, latest_moving_user_name: $('#my_name').text()}});
           set_label(itemId, $('#my_name').text(), ui.position.top, ui.position.left);
           $('.ui-draggable-dragging').fadeTo(1, 1);
-          var s = $('#go_sound').get(0);
-          if (s.muted != true) {
-            s.play();
-          }
+          $('#go_sound').get(0).play();
         }
     });
     /* 縦スクロール禁止 */
@@ -136,10 +133,7 @@ $(function(){
 function show_item(data) {
   item_move(data);
   $(".draggable[data-item-id='" + data.item_id + "']").fadeTo(1, 1);
-  var s = $('#go_sound').get(0);
-  if (s.muted != true) {
-    s.play();
-  }
+  $('#go_sound').get(0).play();
 }
 
 function item_move(data) {
@@ -315,10 +309,8 @@ function initialize_sound_onoff() {
   var sound_onoff_str, class_str, $onoff_button;
   if (state_go_sound == 'off') {
     sound_onoff_str = "sound on";
-//    class_str = "icon-volume-up";
   } else {
     sound_onoff_str = "sound off ";
-//    class_str = "icon-volume-off ";
   }
   $onoff_button = $('<button class="btn btn-small" id="sound_onoff" onclick="change_soundonoff(this)"> ' + sound_onoff_str + '</button>');
   $('p.logout').append($onoff_button);
@@ -327,16 +319,12 @@ function change_soundonoff(item) {
   var s = $('#go_sound').get(0);
   if (state_go_sound == 'off') {
     s.muted = false;
-//    item.classList.remove("icon-volume-up");
     state_go_sound = 'on';
     item.textContent = "sound off";
-//    item.classList.add("icon-volume-off");
   } else {
     s.muted = true;
-//    item.classList.remove("icon-volume-off");
     state_go_sound = 'off';
     item.textContent = "sound on";
-//    item.classList.add("icon-volume-up");
   }
 }
 
