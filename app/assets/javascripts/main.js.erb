@@ -47,11 +47,19 @@ $(function(){
       pusher_connection_status = "disconnected";
       set_connection_status(false);
     });
+    pusher.bind('client-join-channel', function(data) {
+      reflesh_membercount(data.channel_id, data.mcount);
+    });
 
     var channel = pusher.subscribe($('.messages').data('channel'));
     channel.bind('pusher:subscription_succeeded', function(members) {
       members.each(function(member) {
         add_member(member.id, member.info);
+        add_membercount(members.count);
+      });
+      pusher.trigger('client-join-channel', {
+        channel_id: $('.channels .here').data('channel-id'),
+        mcount: members.count
       });
     });
     channel.bind('pusher:member_added', function(member) {
@@ -395,4 +403,15 @@ function remove_member(member_id, member_info) {
       $member.remove();
     }
   });
+}
+function add_membercount(member_count) {
+  var $count = $('<span id="mcount_' + 'channelID' + '"> [' + member_count + ']</span>');
+  $('#mcount_'+'channelID').remove();
+  $('.here>a').append($count);
+}
+function reflesh_membercount(channel_id, member_count) {
+  var $count = $('<span id="mcount_' + channel_id + '"> [' + member_count + ']</span>');
+  var $target_channel = $('#mcount_'+channel_id);
+  $target_channel.remove();
+  $target_channel.append($count);
 }

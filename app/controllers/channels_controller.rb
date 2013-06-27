@@ -28,6 +28,11 @@ class ChannelsController < ApplicationController
     if @table.present?
       @latest_moving_item = @table.items.where('latest_moving_user_name IS NOT NULL').order('updated_at DESC').first
     end
+    @join_channel_id = params[:channel_id]
+    @join_channel_count = params[:mcount]
+    @channels.each do |ch|
+      Pusher[ch].trigger('join-channel', {channel_id: @join_channel_id, mcount: @join_channel_count})
+    end
   end
 
 end
