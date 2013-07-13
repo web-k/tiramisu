@@ -7,7 +7,7 @@ class ChannelsController < ApplicationController
   end
 
   def create
-    @channel = Channel.new(params[:channel])
+    @channel = Channel.new(params.require(:channel).permit(:name))
     if params[:table].present?
       template = TableTemplate.find params[:table]
       @channel.table = template.create if template.present?

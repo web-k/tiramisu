@@ -1,13 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails'
+ruby '2.0.0'
 
+gem 'rails'
 
 gem 'less-rails'
 gem 'sass-rails'
 gem 'coffee-rails'
-
-gem 'uglifier'
 
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails"
@@ -40,9 +39,11 @@ group :development, :test do
 end
 gem 'pusher'
 
-gem 'therubyracer', '0.11.0beta8'
-gem 'libv8', '3.11.8.4'
+gem 'therubyracer', '0.11.4'
+gem 'libv8'
+gem 'uglifier'
 
 group :production do
+  gem 'rails_12factor'
   gem 'pg'
 end
