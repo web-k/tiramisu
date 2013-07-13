@@ -9,7 +9,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 
 gem 'jquery-rails'
-gem "twitter-bootstrap-rails", '2.2.6'
+gem "twitter-bootstrap-rails"
 gem "rails_autolink"
 
 # To use ActiveModel has_secure_password
