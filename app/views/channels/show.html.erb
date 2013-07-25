@@ -1,6 +1,7 @@
 <div class="row">
   <div class="span9<%= @table.present? ? ' go' : '' %>">
     <% if @table.present? %>
+    <button type="button" name="init_items" onclick="init_items()">&lt;&lt;</button>
     <div id="table_area">
       <style TYPE="text/css">
         #table_area {
@@ -10,7 +11,7 @@
       </style>
       <%= image_tag 'goban'+(@table.name=='Go6ro' ? '6': '')+'.png', class: "ban" %>
       <% @table.items.each do |item| %>
-        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="<%= asset_path item.kind+'.gif' %>" data-item-id="<%= item.id %>">
+        <img class="draggable" style="position: absolute; top: <%= item.position_y %>px; left: <%= item.position_x %>px;" src="<%= asset_path item.kind+'.gif' %>" data-item-id="<%= item.id %>" data-init-position-x="<%= item.init_position_x %>" data-init-position-y="<%= item.init_position_y %>">
         <% if @latest_moving_item.present? and @latest_moving_item.id == item.id %>
         <div class="label" style="top: <%= item.position_y %>px; left: <%= item.position_x + 30 %>px;"><%= item.latest_moving_user_name %></div>
         <% end %>
