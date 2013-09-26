@@ -37,6 +37,9 @@
           $('div#remote').append('<video id="'+id+'" autoplay="autoplay"></video>');
           rtc.attachStream(stream, id.toString());
         });
+        rtc.on('disconnect stream', function(id){
+          $('#'+id).remove();
+        });
 
         // more rtc callbacks are available
       </script>
