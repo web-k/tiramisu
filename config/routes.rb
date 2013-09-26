@@ -65,6 +65,7 @@ Tiramisu::Application.routes.draw do
 
   post 'pusher/auth' => 'pusher#auth'
   post '/items/:id/event/move' => 'items#move'
+  put '/channels/:id' => 'channels#edit'
 
   match "*a" => "application#render_error", via: [:get, :post]
 end

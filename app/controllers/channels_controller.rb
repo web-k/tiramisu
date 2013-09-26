@@ -33,4 +33,11 @@ class ChannelsController < ApplicationController
     render_error(options)
   end
 
+  def edit
+    @channel = Channel.find(params[:id])
+    @channel.name = params[:channel][:name]
+    @channel.save!
+    redirect_to(:controller => 'channels', :action => 'show')
+  end
+
 end
