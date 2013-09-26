@@ -1,4 +1,4 @@
 class Message < ActiveRecord::Base
-  attr_accessible :content
+  include ActiveModel::ForbiddenAttributesProtection
   belongs_to :channel
 end

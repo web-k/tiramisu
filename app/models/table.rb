@@ -1,5 +1,5 @@
 class Table < ActiveRecord::Base
-  attr_accessible :name
+  include ActiveModel::ForbiddenAttributesProtection
   has_many :items
   has_one :channel
 end

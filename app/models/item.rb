@@ -1,4 +1,4 @@
 class Item < ActiveRecord::Base
-  attr_accessible :kind, :position_x, :position_y, :table_id, :latest_moving_user_name
+  include ActiveModel::ForbiddenAttributesProtection
   belongs_to :table
 end
