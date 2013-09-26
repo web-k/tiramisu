@@ -1,7 +1,7 @@
 <%= form_for(@channel) do |f| %>
   <span class="field">
     <%= f.text_field :name %>
-    <%= select_tag :table, options_for_select([['テーブルなし', 'none'], ['囲碁', 'Go'], ['囲碁(6路盤)', 'Go6ro']], 'none') %>
+    <%= select_tag :table, options_for_select([['テーブルなし', 'none'], ['囲碁', 'Go'], ['囲碁(6路盤)', 'Go6ro'], ['ビデオチャット', 'VideoChat']], 'none') %>
   </span>
   <span class="actions">
     <%= f.submit "チャンネルを作成", :class => 'btn' %>
@@ -19,7 +19,9 @@
         table_name =
           if channel.table.blank? or channel.table.name == 'none' then ''
           elsif channel.table.name == 'Go' then '囲碁'
-          else '囲碁(6路盤)' end
+          elsif channel.table.name == 'Go6ro' then '囲碁(6路盤)'
+          elsif channel.table.name == 'VideoChat' then 'ビデオチャット'
+          else '' end
       %>
       <td><%= table_name %></td>
     </tr>

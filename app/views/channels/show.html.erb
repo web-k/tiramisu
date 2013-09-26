@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="span9<%= @table.present? ? ' go' : '' %>">
-    <% if @table.present? %>
+  <div class="span9<%= @table.present? && @table.name.include?('Go') ? ' go' : '' %>">
+    <% if @table.present? && @table.name.include?('Go') %>
     <div id="table_area">
       <style TYPE="text/css">
         #table_area {
@@ -17,6 +17,29 @@
       <% end %>
       <audio src="/assets/spo_ge_igo_utu01.mp3" id="go_sound" preload="auto"/>
     </div>
+    <% elsif @table.present? && @table.name == 'VideoChat' %>
+      <video id="local" autoplay="autoplay"></video>
+      <div id="remote">
+      </div>
+      <%= javascript_include_tag "webrtc.io" %>
+      <script>
+        // note: make sure hostname available to all connecting clients
+        // (ie. probably not `localhost`)
+        rtc.connect('ws://<%= ENV['WEBRTC_HOST'] %>:8001', 'tiramisu-channel-'+<%= @channel.id %>);
+
+        rtc.createStream({"video": true, "audio":false}, function(stream){
+          // get local stream for manipulation
+          rtc.attachStream(stream, 'local');
+        });
+
+        rtc.on('add remote stream', function(stream, id){
+          // show the remote video
+          $('div#remote').append('<video id="'+id+'" autoplay="autoplay"></video>');
+          rtc.attachStream(stream, id.toString());
+        });
+
+        // more rtc callbacks are available
+      </script>
     <% else %>
     <%= render 'messages' %>
     <% end %>
