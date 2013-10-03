@@ -43,3 +43,12 @@ video {
   height: 150px;
   margin-left: 10px;
 }
+#remote {
+  display: inline-block;
+}
+#pickup {
+  video {
+    width: 640px;
+    height: 480px;
+  }
+}

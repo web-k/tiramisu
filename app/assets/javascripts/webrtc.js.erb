@@ -1,0 +1,29 @@
+    // note: make sure hostname available to all connecting clients
+    // (ie. probably not `localhost`)
+    rtc.connect('ws://<%= ENV['WEBRTC_HOST'] %>:8001', 'tiramisu-channel-'+channelId);
+
+    rtc.createStream({"video": true, "audio":false}, function(stream){          
+    // get local stream for manipulation
+      rtc.attachStream(stream, 'local');
+    });
+
+    rtc.on('add remote stream', function(stream, id){
+      // show the remote video
+      $video = $('<video id="'+id+'" autoplay="autoplay"></video>');
+      $('div#remote').append($video);
+      $video.on("click", function(){
+        $("#remote").append($("#pickup").children());
+        $("#pickup").append($(this));
+        $("#remote").children().each(function(){
+          this.play();
+        });
+        this.play();
+      });
+      rtc.attachStream(stream, id.toString());
+    });
+    rtc.on('disconnect stream', function(id){
+      $('#'+id).remove();
+    });
+
+    // more rtc callbacks are available
+
