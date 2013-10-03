@@ -2,7 +2,7 @@
     // (ie. probably not `localhost`)
     rtc.connect('ws://<%= ENV['WEBRTC_HOST'] %>:8001', 'tiramisu-channel-'+channelId);
 
-    rtc.createStream({"video": true, "audio":false}, function(stream){          
+    rtc.createStream({"video": true, "audio":true}, function(stream){          
     // get local stream for manipulation
       rtc.attachStream(stream, 'local');
     });
