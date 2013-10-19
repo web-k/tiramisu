@@ -77,16 +77,9 @@ if (navigator.webkitGetUserMedia) {
 
   // Holds the STUN/ICE server to use for PeerConnections.
   rtc.SERVER = function() {
-    if (navigator.mozGetUserMedia) {
-      return {
-        "iceServers": [{
-          "url": "stun:<%= ENV['WEBRTC_HOST'] %>:3478"
-        }]
-      };
-    }
     return {
       "iceServers": [{
-        "url": "stun:<%= ENV['WEBRTC_HOST'] %>:3478"
+        "url": "stun:<%= ENV['STUN_HOST'] %>"
       }]
     };
   };
