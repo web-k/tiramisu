@@ -1,6 +1,6 @@
 <div class="row">
-  <div class="span9<%= @table.present? ? ' go' : '' %>">
-    <% if @table.present? %>
+  <div class="span9<%= @table.present? && @table.name.include?('Go') ? ' go' : '' %>">
+    <% if @table.present? && @table.name.include?('Go') %>
     <div id="table_area">
       <style TYPE="text/css">
         #table_area {
@@ -17,6 +17,17 @@
       <% end %>
       <audio src="/assets/spo_ge_igo_utu01.mp3" id="go_sound" preload="auto"/>
     </div>
+    <% elsif @table.present? && @table.name == 'VideoChat' %>
+      <video id="local" autoplay="autoplay" muted></video>
+      <div id="remote">
+      </div>
+      <div id="pickup">
+      </div>
+      <%= javascript_include_tag "webrtc.io" %>
+      <script>
+        var channelId = <%= @channel.id %>;
+      </script>
+      <%= javascript_include_tag "webrtc" %>
     <% else %>
     <%= render 'messages' %>
     <% end %>

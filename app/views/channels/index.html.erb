@@ -1,7 +1,12 @@
 <%= form_for(@channel) do |f| %>
+  <%
+    table_options = [['テーブルなし', 'none']]
+    table_options += [['囲碁', 'Go'], ['囲碁(6路盤)', 'Go6ro']] if TABLE_ENABLE
+    table_options.push(['ビデオチャット', 'VideoChat']) if WEBRTC_ENABLE
+  %>
   <span class="field">
     <%= f.text_field :name %>
-    <%= select_tag :table, options_for_select([['テーブルなし', 'none'], ['囲碁', 'Go'], ['囲碁(6路盤)', 'Go6ro']], 'none') %>
+    <%= select_tag :table, options_for_select(table_options, 'none') %>
   </span>
   <span class="actions">
     <%= f.submit "チャンネルを作成", :class => 'btn' %>
@@ -13,13 +18,18 @@
     <th>テーブル</th>
   </tr>
   <% @channels.each do |channel| %>
+    <%
+      next if (!WEBRTC_ENABLE and channel.table.present? and channel.table.name == 'VideoChat') or
+        (!TABLE_ENABLE and channel.table.present? and ['Go','Go6ro'].include?(channel.table.name)) %>
     <tr>
       <td><%= link_to channel.name, channel_path(channel) %></td>
       <%
         table_name =
           if channel.table.blank? or channel.table.name == 'none' then ''
           elsif channel.table.name == 'Go' then '囲碁'
-          else '囲碁(6路盤)' end
+          elsif channel.table.name == 'Go6ro' then '囲碁(6路盤)'
+          elsif channel.table.name == 'VideoChat' then 'ビデオチャット'
+          else '' end
       %>
       <td><%= table_name %></td>
     </tr>
