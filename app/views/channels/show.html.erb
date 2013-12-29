@@ -1,5 +1,11 @@
+<%= content_for :foot do %>
+<% if @table.present? && @table.name == 'VideoChat' %>
+  <%= javascript_include_tag "webrtc.io" %>
+  <%= javascript_include_tag "webrtc" %>
+<% end %>
+<% end %>
 <div class="row">
-  <div class="span9<%= @table.present? && @table.name.include?('Go') ? ' go' : '' %>">
+  <div class="span9<%= @table.present? && @table.name.include?('Go') ? ' go' : '' %><%= @table.present? && @table.name=='VideoChat' ? ' video_chat' : '' %>">
     <% if @table.present? && @table.name.include?('Go') %>
     <div id="table_area">
       <style TYPE="text/css">
@@ -23,11 +29,9 @@
       </div>
       <div id="pickup">
       </div>
-      <%= javascript_include_tag "webrtc.io" %>
       <script>
         var channelId = <%= @channel.id %>;
       </script>
-      <%= javascript_include_tag "webrtc" %>
     <% else %>
     <%= render 'messages' %>
     <% end %>
