@@ -38,16 +38,32 @@
   position: absolute;
   z-index: 200;
 }
-video {
+.chat_user, .local_chat_user {
   width: 150px;
   height: 150px;
   margin-left: 10px;
+  display: inline-block;
+  vertical-align: top;
+  &.audio {
+    background-color: #f6f6ff;
+    border: solid 1px #e0e0ff;
+    img {
+      padding-top: 18px;
+    }
+  }
+}
+#local {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
 }
 #remote {
   display: inline-block;
+  vertical-align: top;
 }
 #pickup {
-  video {
+  margin-top: 10px;
+  .chat_user {
     width: 640px;
     height: 480px;
   }
