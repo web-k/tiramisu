@@ -52,7 +52,7 @@ $(function() {
 
         rtc.createStream({"video": is_video, "audio":true}, function(stream){
           var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
-          var $chat_user = is_video_chat ? $('<video id="local_chat_user" class="local_chat_user" autoplay="autoplay"></video>') : $('<div class="local_chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><audio id="local_chat_user" autoplay="autoplay"></audio></div>');
+          var $chat_user = is_video_chat ? $('<video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted></video>') : $('<div class="local_chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><audio id="local_chat_user" autoplay="autoplay" muted></audio></div>');
           $('#local').append($chat_user);
           rtc.attachStream(stream, 'local_chat_user');
         });
