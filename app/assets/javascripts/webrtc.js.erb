@@ -16,45 +16,51 @@ $(function() {
     if (is_video_chat) {
 
       rtc.on('add remote stream', function(stream, id){
-        // show the remote video
-        $video = $('<video id="'+id+'" autoplay="autoplay"></video>');
-        $('div#remote').append($video);
-        $video.on("click", function(){
-          if ($("#pickup video").size()==0) {
+        var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
+        var $chat_user = is_video_chat ? $('<video class="chat_user chat_media" id="'+id+'" autoplay="autoplay"></video>') : $('<div class="chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><audio class="chat_user chat_media" id="'+id+'" autoplay="autoplay"></audio></div>');
+        $('div#remote').append($chat_user);
+        $chat_user.on("click", function(){
+          if (!$(this).hasClass('audio') && $("#pickup video.chat_user").size()==0) {
             var $button = $('<input type="button" class="btn btn-small" value="フルスクリーン" id="fullscreen" />');
             $('p.logout').append($button);
             $button.on("click", function() {
               requestFullScreen($("#pickup video").get(0));
             });
+          } else if ($(this).hasClass('audio')) {
+            $('#fullscreen').remove();
           }
           $("#remote").append($("#pickup").children());
           $("#pickup").append($(this));
           $("#remote").children().each(function(){
-            this.play();
+            $(this).parent().find(".chat_media").get(0).play();
           });
-          this.play();
+          $(this).parent().find(".chat_media").get(0).play();
         });
         rtc.attachStream(stream, id.toString());
       });
       rtc.on('disconnect stream', function(id){
         if($('#pickup #'+id).size()>0) { $('#fullscreen').remove(); }
-        $('#'+id).remove();
+        $('#'+id).parent().hasClass("audio") ? $('#'+id).parent().remove() : $('#'+id).remove();
       });
 
-      var $button = $('<input type="button" class="btn btn-small" value="ビデオチャット開始" id="video_chat_on" />');
-      $('p.logout').append($button);
+      var $audio_chat_button = $('<input type="button" class="btn btn-small" value="音声チャット" id="audio_chat_on" />');
+      var $video_chat_button = $('<input type="button" class="btn btn-small" value="ビデオチャット" id="video_chat_on" />');
+      $('p.logout').append($audio_chat_button).append($video_chat_button);
 
-      $button.on("click", function() {
-
+      var start_chat = function (is_video) {
         rtc.connect('ws://<%= ENV['WEBRTC_HOST'] %>', 'tiramisu-channel-'+channelId);
 
-        rtc.createStream({"video": true, "audio":true}, function(stream){
-          // get local stream for manipulation
-          rtc.attachStream(stream, 'local');
+        rtc.createStream({"video": is_video, "audio":true}, function(stream){
+          var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
+          var $chat_user = is_video_chat ? $('<video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted></video>') : $('<div class="local_chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><audio id="local_chat_user" autoplay="autoplay" muted></audio></div>');
+          $('#local').append($chat_user);
+          rtc.attachStream(stream, 'local_chat_user');
         });
 
-        $(this).remove();
+        $("#audio_chat_on, #video_chat_on").remove();
+      };
 
-      });
+      $audio_chat_button.on("click", function() { start_chat(false); });
+      $video_chat_button.on("click", function() { start_chat(true); });
     }
 });
