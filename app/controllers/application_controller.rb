@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   ERROR_TITLE = {
-    not_found: 'お探しのページは見つかりません'
+    not_found: 'Not Found'
   }
 
   def render_error(options = {})
