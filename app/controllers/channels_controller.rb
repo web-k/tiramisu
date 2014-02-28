@@ -28,6 +28,9 @@ class ChannelsController < ApplicationController
     if @table.present?
       @latest_moving_item = @table.items.where('latest_moving_user_name IS NOT NULL').order('updated_at DESC').first
     end
+  rescue ActiveRecord::RecordNotFound 
+    options = {status: 404, error_label: 'not_found'}
+    render_error(options)
   end
 
 end
