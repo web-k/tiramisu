@@ -12,38 +12,53 @@ $(function() {
       }
     };
 
+    var peer = new Peer({key: 'rgd9hcqqpct8olxr'});
+
+    peer.on('open', function(){
+      console.log('My peer ID is: ' + peer.id);
+      $('#my_name').attr('data-webrtc-id', peer.id);
+    });
+
     var is_video_chat = $(".video_chat").size()>0 ? true : false;
     if (is_video_chat) {
 
-      rtc.on('add remote stream', function(stream, id){
-        var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
-        var $chat_user = $('<div class="chat_user" id="'+id+'" />');
-        var $media = is_video_chat ? $('<video autoplay="autoplay" id="media-'+id+'" />') : $('<img src="<%= asset_path 'audio.png' %>" alt="" /><audio id="media-'+id+'" autoplay="autoplay" />');
-        is_video_chat ? $chat_user.addClass('video') : $chat_user.addClass('audio');
-        $chat_user.append($media);
-        $('div#remote').append($chat_user);
-        $chat_user.on("click", function(){
-          if ($(this).find('audio').size()==0 && $("#pickup video").size()==0) {
-            var $button = $('<input type="button" class="btn btn-small" value="フルスクリーン" id="fullscreen" />');
-            $('p.logout').append($button);
-            $button.on("click", function() {
-              requestFullScreen($("#pickup video").get(0));
+      peer.on('call', function(mediaConnection) {
+        if (!window.localStream) { return; }
+        mediaConnection.answer(window.localStream);
+        var id = mediaConnection.peer;
+        if ($("#"+id).size()>0) { return; }
+        peer.call(id, window.localStream);
+
+        mediaConnection.on('stream', function(stream){
+          var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
+          var $chat_user = $('<div class="chat_user" id="'+id+'" />');
+          var $media = is_video_chat ? $('<video autoplay="autoplay" id="media-'+id+'" />') : $('<img src="<%= asset_path 'audio.png' %>" alt="" /><audio id="media-'+id+'" autoplay="autoplay" />');
+          is_video_chat ? $chat_user.addClass('video') : $chat_user.addClass('audio');
+          $chat_user.append($media);
+          $('div#remote').append($chat_user);
+          $chat_user.on("click", function(){
+            if ($(this).find('audio').size()==0 && $("#pickup video").size()==0) {
+              var $button = $('<input type="button" class="btn btn-small" value="フルスクリーン" id="fullscreen" />');
+              $('p.logout').append($button);
+              $button.on("click", function() {
+                 requestFullScreen($("#pickup video").get(0));
+              });
+            } else if ($(this).find('audio').size()>0) {
+              $('#fullscreen').remove();
+            }
+            $("#remote").append($("#pickup").children());
+            $("#pickup").append($(this));
+            $("#remote").children().each(function(){
+              $(this).find('video, audio').get(0).play();
             });
-          } else if ($(this).find('audio').size()>0) {
-            $('#fullscreen').remove();
-          }
-          $("#remote").append($("#pickup").children());
-          $("#pickup").append($(this));
-          $("#remote").children().each(function(){
             $(this).find('video, audio').get(0).play();
           });
-          $(this).find('video, audio').get(0).play();
+          $("#media-"+id.toString()).prop('src', URL.createObjectURL(stream));
         });
-        rtc.attachStream(stream, 'media-'+id.toString());
-      });
-      rtc.on('disconnect stream', function(id){
-        if($('#pickup #'+id).size()>0) { $('#fullscreen').remove(); }
-         $('#'+id).remove();
+        mediaConnection.on('close', function(){
+          if($('#pickup #'+id).size()>0) { $('#fullscreen').remove(); }
+           $('#'+id).remove();
+        });
       });
 
       var $audio_chat_button = $('<input type="button" class="btn btn-small" value="音声チャット" id="audio_chat_on" />');
@@ -51,30 +66,50 @@ $(function() {
       $('p.logout').append($audio_chat_button).append($video_chat_button);
 
       var start_chat = function (is_video) {
-        rtc.connect('ws://<%= ENV['WEBRTC_HOST'] %>', 'tiramisu-channel-'+channelId);
 
-        rtc.createStream({"video": is_video, "audio":true}, function(stream){
+        navigator.getMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+        navigator.getMedia({"video": is_video, "audio":true}, function(stream){
           var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
           var $chat_user = is_video_chat ? $('<video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted></video>') : $('<div class="local_chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted style="display: none"></video></div>'); // FIXME: <audio muted>だと音声が聞こえなくなる
           $('#local').append($chat_user);
-          rtc.attachStream(stream, 'local_chat_user');
+          $('#local_chat_user').prop('src', URL.createObjectURL(stream));
+          window.localStream = stream;
+          channel.bind('pusher:member_removed', function(member) {
+            var $member = $(".chat_user .user_name:contains("+member.info.name+")").parent();
+            if($member.size==0) { return; }
+            var member_id = $member.attr("id");
+            if($('#pickup #'+member_id).size()>0) { $('#fullscreen').remove(); }
+             $('#'+member_id).remove();
+          });
+          $(".members li").not(".myself").each(function() {
+            var $member = $(this);
+            peer.call($member.attr("data-webrtc-id"), stream);
+          });
+        }, function(error) {
+          console.log("The following error occured: " + error);
         });
 
         $("#audio_chat_on, #video_chat_on").remove();
 
-        channel.bind('client-webrtc_info', function (data) {
-          var user_name = $("li[data-member-id='"+data.user_id+"'").text();
-          var $chat_user = $('#'+data.webrtc_id);
-          $chat_user.find('p.user_name').remove();
-          $chat_user.append('<p class="user_name">'+user_name+'</p>');
-        });
-        setInterval(function () {
-          channel.trigger('client-webrtc_info', {
-            user_id: channel.members.me.id,
-            webrtc_id: rtc._me,
-          });
-        }, 2000);
       };
+
+      channel.bind('client-webrtc_info', function (data) {
+        var $user = $("li[data-member-id='"+data.user_id+"']");
+        var user_name = $user.text();
+        $user.attr('data-webrtc-id', data.webrtc_id);
+        var $chat_user = $('#'+data.webrtc_id);
+        $chat_user.find('p.user_name').remove();
+        $chat_user.append('<p class="user_name">'+user_name+'</p>');
+      });
+      setInterval(function () {
+        channel.trigger('client-webrtc_info', {
+          user_id: channel.members.me.id,
+          webrtc_id: peer.id,
+        });
+      }, 1000);
 
       $audio_chat_button.on("click", function() { start_chat(false); });
       $video_chat_button.on("click", function() { start_chat(true); });
