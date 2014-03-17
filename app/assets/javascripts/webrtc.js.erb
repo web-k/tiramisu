@@ -12,7 +12,18 @@ $(function() {
       }
     };
 
-    var peer = new Peer({key: 'rgd9hcqqpct8olxr'});
+    var peer = new Peer({
+      key: '<%= ENV['PEERJS_KEY'] %>'
+      <% if ENV['PEERJS_HOST'].present? %>
+      , host: '<%= ENV['PEERJS_HOST'] %>'
+      , port: <%= ENV['PEERJS_PORT'].present? ? ENV['PEERJS_PORT'] : '9000' %>
+      <% end %>
+      <% if ENV['PEERJS_IRC_SERVER'] %>
+      , config: {'iceServers': [
+        { url: 'stun:<%= ENV['PEERJS_IRC_SERVER']%>' },
+      ]}
+      <% end %>
+    });
 
     peer.on('open', function(){
       console.log('My peer ID is: ' + peer.id);
@@ -105,10 +116,12 @@ $(function() {
         $chat_user.append('<p class="user_name">'+user_name+'</p>');
       });
       setInterval(function () {
-        channel.trigger('client-webrtc_info', {
-          user_id: channel.members.me.id,
-          webrtc_id: peer.id,
-        });
+        if (channel.members.me && peer.id) {
+          channel.trigger('client-webrtc_info', {
+            user_id: channel.members.me.id,
+            webrtc_id: peer.id,
+          });
+        }
       }, 1000);
 
       $audio_chat_button.on("click", function() { start_chat(false); });
