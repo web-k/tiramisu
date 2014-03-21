@@ -82,7 +82,16 @@ $(function() {
                        navigator.webkitGetUserMedia ||
                        navigator.mozGetUserMedia ||
                        navigator.msGetUserMedia);
-        navigator.getMedia({"video": is_video, "audio":true}, function(stream){
+        navigator.getMedia({
+          "video": is_video ? {
+            "mandatory": {
+              "maxHeight": <%= ENV['WEBRTC_VIDEO_HEIGHT'].present? ? '"'+ENV['WEBRTC_VIDEO_HEIGHT']+'"' : '"240"' %>,
+              "maxFrameRate": <%= ENV['WEBRTC_VIDEO_FRAME_RATE'].present? ? '"'+ENV['WEBRTC_VIDEO_FRAME_RATE']+'"' : '"4"' %>
+            },
+            "optional": []
+          } : false,
+          "audio":true
+        }, function(stream){
           var is_video_chat = stream.getVideoTracks().length > 0 ? true : false;
           var $chat_user = is_video_chat ? $('<video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted></video>') : $('<div class="local_chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><video id="local_chat_user" class="local_chat_user" autoplay="autoplay" muted style="display: none"></video></div>'); // FIXME: <audio muted>だと音声が聞こえなくなる
           $('#local').append($chat_user);
