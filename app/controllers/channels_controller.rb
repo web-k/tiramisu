@@ -33,7 +33,7 @@ class ChannelsController < ApplicationController
     render_error(options)
   end
 
-  def edit
+  def update
     @channel = Channel.find(params[:id])
     @channel.name = params[:channel][:name]
     @channel.save!
