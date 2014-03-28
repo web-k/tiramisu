@@ -127,6 +127,7 @@ $(function(){
   }
   check_webkit_notifications();
   if ($('#table_area').size()>0) { initialize_table_upside(); initialize_sound_onoff();}
+  channelname_editor();
 });
 
 
@@ -395,4 +396,23 @@ function remove_member(member_id, member_info) {
       $member.remove();
     }
   });
+}
+
+function channelname_editor(){
+  var $channel_name= $('#channel_name')
+  var $channel_name_static = $('#channel_name_static')
+  var $channel_name_edit = $('#channel_name_edit')
+  $channel_name_static.on('click', function() {
+    $(this).css('display', 'none');
+    $channel_name.val($('#channel_name_static').text());
+    $channel_name_edit.css('display', 'inline');
+    setTimeout(function() {
+      $channel_name.focus();
+    }, 0);
+  });
+  $channel_name_edit.on('focusout', function() {
+    var channel_id = $('.channels .here').data('channel-id');
+    $('#edit_channel_'+channel_id).submit();
+  });
+
 }

@@ -59,3 +59,14 @@ header.subhead {
   text-align: center;
   margin-top: 60px;
 }
+
+form.edit_channel {
+  display: inline;
+  font-size: 13px;
+  #channel_name_static {
+    padding-right: 20px;
+    background: url(<%= asset_path 'edit.png' %>) no-repeat right !important;
+    background-size: contain;
+    opacity: 0.5;
+  }
+}

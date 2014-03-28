@@ -26,7 +26,24 @@
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <div class="brand"><%= link_to image_tag('tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu'), root_path %></div>
+          <div class="brand">
+            <%= link_to image_tag('tiramisu_logo.png', alt: 'Tiramisu', title: 'Tiramisu'), root_path %>
+            <% if !@channel.nil? && @channel.id.present? %><%= form_for(@channel, :url => {:action => 'update'}, :method => :put) do |f| %>
+              <% if @channel.errors.any? %>
+                <div id="channel_name_error_explanation">
+                  <h2><%= pluralize(@channel.errors.count, "error") %> prohibited this message from being saved:</h2>
+                  <ul>
+                  <% @channel.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
+              <% end %>
+
+              <div id="channel_name_static" style="display:inline;"><%== @channel.name %></div>
+              <div id="channel_name_edit" style="display:none;"><%== f.text_field :name %></div>
+            <% end %><% end %>
+          </div>
           <p class="nav pull-right logout">
             こんにちは <span id="my_name"><%= session[:user_name]%></span> さん
             <%= link_to 'ログアウト', {:controller => 'authentication', :action => 'logout'}, {:class => 'btn btn-small'} %>
