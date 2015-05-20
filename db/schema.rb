@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20130307021230) do
 
   create_table "channels", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.integer  "table_id"
   end
 
@@ -25,23 +25,23 @@ ActiveRecord::Schema.define(version: 20130307021230) do
     t.integer  "position_y"
     t.string   "kind"
     t.integer  "table_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "latest_moving_user_name"
   end
 
   create_table "messages", force: true do |t|
     t.string   "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "user_name"
     t.integer  "channel_id"
   end
 
   create_table "tables", force: true do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
