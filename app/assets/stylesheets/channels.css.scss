@@ -39,6 +39,7 @@
   z-index: 200;
 }
 .chat_user, .local_chat_user {
+  position: relative;
   width: 150px;
   height: 150px;
   margin-left: 10px;
@@ -51,8 +52,15 @@
       padding-top: 18px;
     }
   }
+  p.user_name {
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    margin: 0;
+    font-size: 12px;
+  }
 }
-#local {
+#local, .chat_user video, .chat_user audio {
   width: 150px;
   height: 150px;
   display: inline-block;
@@ -63,8 +71,18 @@
 }
 #pickup {
   margin-top: 10px;
-  .chat_user {
+  .chat_user, .chat_user video, .chat_user audio {
     width: 640px;
     height: 480px;
+    &.video .user_name {
+      bottom: 0;
+      right: 0;
+      padding: 4px 8px;
+      background-color: rgba(0,0,0,0.5);
+      color: #fff;
+    }
+    &.audio .user_name {
+      padding: 4px 6px;
+    }
   }
 }

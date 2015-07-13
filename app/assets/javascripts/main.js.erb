@@ -16,39 +16,10 @@ function update_item_state(id, x, y) {
   drag_item_state.current.y = y;
 }
 
-$(function(){
-  $('form.new_message')
-    .on('ajax:beforeSend', function(event) {
-      $(this).find("#message_content").prop("disabled", true);
-    })
-    .on('ajax:success', function() {
-      $(this).find("#message_content").val("");
-    })
-    .on('ajax:complete', function() {
-      $(this).find("#message_content").prop("disabled", false);
-    });
-  if ($('.messages').size() > 0) {
+var pusher = null;
+var channel = null;
 
-    var pusher = new Pusher('<%= Pusher.key %>');
-
-    var pusher_connection_status = "initialized";
-    pusher.connection.bind('connected', function() {
-      if (pusher_connection_status == "disconnected") {
-        refresh_channel();
-      }
-      pusher_connection_status = "connected";
-      set_connection_status(true);
-    });
-    pusher.connection.bind('disconnected', function() {
-      pusher_connection_status = "disconnected";
-      set_connection_status(false);
-    });
-    pusher.connection.bind('unavailable', function() {
-      pusher_connection_status = "disconnected";
-      set_connection_status(false);
-    });
-
-    var channel = pusher.subscribe($('.messages').data('channel'));
+function bind_channel(channel) {
     channel.bind('pusher:subscription_succeeded', function(members) {
       members.each(function(member) {
         add_member(member.id, member.info);
@@ -74,6 +45,42 @@ $(function(){
     });
     channel.bind('item_move', show_item);
     channel.bind('client-item_drag', item_move);
+}
+
+$(function(){
+  $('form.new_message')
+    .on('ajax:beforeSend', function(event) {
+      $(this).find("#message_content").prop("disabled", true);
+    })
+    .on('ajax:success', function() {
+      $(this).find("#message_content").val("");
+    })
+    .on('ajax:complete', function() {
+      $(this).find("#message_content").prop("disabled", false);
+    });
+  if ($('.messages').size() > 0) {
+
+    pusher = new Pusher('<%= Pusher.key %>');
+
+    var pusher_connection_status = "initialized";
+    pusher.connection.bind('connected', function() {
+      if (pusher_connection_status == "disconnected") {
+        refresh_channel();
+      }
+      pusher_connection_status = "connected";
+      set_connection_status(true);
+    });
+    pusher.connection.bind('disconnected', function() {
+      pusher_connection_status = "disconnected";
+      set_connection_status(false);
+    });
+    pusher.connection.bind('unavailable', function() {
+      pusher_connection_status = "disconnected";
+      set_connection_status(false);
+    });
+
+    channel = pusher.subscribe($('.messages').data('channel'));
+    bind_channel(channel);
 
     /* class名に"draggable"を持つオブジェクトをドラッグ可能にする */
     var $draggable = $('.draggable');
@@ -376,9 +383,10 @@ function refresh_table(table) {
 
 function add_member(member_id, member_info) {
   var $members = $('.members');
-  if ($members.find("li[data-member-id='"+member_id+"']").size() > 0) { return; }
+  if ($members.find("li[data-member-id='"+member_id+"']").size() > 0) { $members.find("li[data-member-id='"+member_id+"']").remove(); }
   var $member = $('<li>' + member_info.name + '</li>');
   $member.attr('data-member-id', member_id);
+  $member.attr('data-webrtc-id', member_info.webrtc_id);
   if ($('#my_name').text() == member_info.name) {
     $member.addClass('myself');
   }

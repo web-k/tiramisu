@@ -1,6 +1,6 @@
 <%= content_for :foot do %>
 <% if @table.present? && @table.name == 'VideoChat' %>
-  <%= javascript_include_tag "webrtc.io" %>
+  <%= javascript_include_tag "peer" %>
   <%= javascript_include_tag "webrtc" %>
 <% end %>
 <% end %>
