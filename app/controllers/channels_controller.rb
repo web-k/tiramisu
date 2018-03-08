@@ -1,5 +1,5 @@
 class ChannelsController < ApplicationController
-  before_filter :authenticate
+  before_action :authenticate
 
   def index
     @channels = Channel.order("created_at DESC")
@@ -15,7 +15,7 @@ class ChannelsController < ApplicationController
     if @channel.save
       redirect_to channels_path
     else
-      render action: 'index'
+      redirect_to action: :index
     end
   end
 

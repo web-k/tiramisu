@@ -1,4 +1,4 @@
-class AddChannelToMessages < ActiveRecord::Migration
+class AddChannelToMessages < ActiveRecord::Migration[4.2]
   def change
     add_column :messages, :channel_id, :integer
   end

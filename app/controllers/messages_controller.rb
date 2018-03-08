@@ -2,7 +2,7 @@
 require 'pusher'
 
 class MessagesController < ApplicationController
-  before_filter :authenticate
+  before_action :authenticate
 
   # POST /messages
   # POST /messages.json
@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
 
       if @message.save
         Pusher['presence-channel-' + params[:channel_id]].trigger('message_added', {message: {user_name: h(@message.user_name), content: view_context.auto_link(@message.content)}, time: @message.created_at.localtime.strftime('%H:%M')})
-        render status: :created, nothing: true
+        render status: :created, body: nil
       else
         render status: :forbiden, text: 'The message can\'t save'
       end

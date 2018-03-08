@@ -2,7 +2,7 @@
 require 'pusher'
 
 class ItemsController < ApplicationController
-  before_filter :authenticate
+  before_action :authenticate
 
   # POST /item/:id/event/move
   # POST /item/:id/event/move.json

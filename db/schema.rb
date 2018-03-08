@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -14,32 +13,32 @@
 ActiveRecord::Schema.define(version: 20130307021230) do
 
   create_table "channels", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "table_id"
+    t.integer "table_id"
   end
 
   create_table "items", force: :cascade do |t|
-    t.integer  "position_x"
-    t.integer  "position_y"
-    t.string   "kind",                    limit: 255
-    t.integer  "table_id"
+    t.integer "position_x"
+    t.integer "position_y"
+    t.string "kind"
+    t.integer "table_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "latest_moving_user_name", limit: 255
+    t.string "latest_moving_user_name"
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string   "content",    limit: 255
+    t.string "content"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_name",  limit: 255
-    t.integer  "channel_id"
+    t.string "user_name"
+    t.integer "channel_id"
   end
 
   create_table "tables", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

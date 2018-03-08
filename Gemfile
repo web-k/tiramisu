@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 ruby '2.5.0'
 
-gem 'rails', '~> 4.2.0'
+gem 'rails'
 
+gem 'listen'
 gem 'less-rails'
 gem 'sass-rails'
 gem 'coffee-rails'
@@ -33,6 +34,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
+  gem 'rails-controller-testing'
   gem 'execjs'
   gem 'capybara'
   gem 'database_cleaner'

@@ -36,24 +36,24 @@ describe MessagesController do
 
   describe "POST create" do
     before do
-      Channel.stub(find: stub_model(Channel, id: 1))
-      Pusher.stub_chain(:[], :trigger)
+      allow(Channel).to receive(:find).and_return(stub_model(Channel, id: 1))
+      allow(Pusher).to receive_message_chain(:[], :trigger)
     end
     describe "with valid params" do
       it "creates a new Message" do
         expect {
-          post :create, {:message => valid_attributes, channel_id: 1}, valid_session
+          post :create, {params: {message: valid_attributes, channel_id: 1}, session: valid_session}
         }.to change(Message, :count).by(1)
       end
 
       it "assigns a newly created message as @message" do
-        post :create, {:message => valid_attributes, channel_id: 1}, valid_session
+        post :create, params: {:message => valid_attributes, channel_id: 1}, session: valid_session
         expect(assigns(:message)).to be_a(Message)
         expect(assigns(:message)).to be_persisted
       end
 
       it "should created response" do
-        post :create, {:message => valid_attributes, channel_id: 1}, valid_session
+        post :create, params: {:message => valid_attributes, channel_id: 1}, session: valid_session
         expect(response.status).to eq 201
       end
     end
