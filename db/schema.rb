@@ -13,33 +13,33 @@
 
 ActiveRecord::Schema.define(version: 20130307021230) do
 
-  create_table "channels", force: true do |t|
-    t.string   "name"
+  create_table "channels", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "table_id"
   end
 
-  create_table "items", force: true do |t|
+  create_table "items", force: :cascade do |t|
     t.integer  "position_x"
     t.integer  "position_y"
-    t.string   "kind"
+    t.string   "kind",                    limit: 255
     t.integer  "table_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "latest_moving_user_name"
+    t.string   "latest_moving_user_name", limit: 255
   end
 
-  create_table "messages", force: true do |t|
-    t.string   "content"
+  create_table "messages", force: :cascade do |t|
+    t.string   "content",    limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_name"
+    t.string   "user_name",  limit: 255
     t.integer  "channel_id"
   end
 
-  create_table "tables", force: true do |t|
-    t.string   "name"
+  create_table "tables", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

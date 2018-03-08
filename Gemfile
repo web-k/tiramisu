@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.6'
+ruby '2.5.0'
 
 gem 'rails', '~> 4.2.0'
 
@@ -8,7 +8,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 
 gem 'jquery-rails'
-gem "twitter-bootstrap-rails"
+gem "twitter-bootstrap-rails", '~> 2.x'
 gem "rails_autolink"
 
 # To use ActiveModel has_secure_password
@@ -26,10 +26,13 @@ gem "rails_autolink"
 # To use debugger
 # gem 'debugger'
 
+gem 'rake', '< 11.0'
+
 group :development, :test do
   gem 'sqlite3'
-  gem 'rspec', "~> 2.12.0"
+  gem 'rspec'
   gem 'rspec-rails'
+  gem 'rspec-activemodel-mocks'
   gem 'execjs'
   gem 'capybara'
   gem 'database_cleaner'
@@ -38,11 +41,11 @@ group :development, :test do
 end
 gem 'pusher'
 
-gem 'therubyracer', '0.11.4'
+gem 'therubyracer'
 gem 'libv8'
 gem 'uglifier'
 
 group :production do
   gem 'rails_12factor'
-  gem 'pg'
+  gem 'pg', '< 1.0.0'
 end
