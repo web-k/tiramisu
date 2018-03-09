@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
 
     if redirect_url.nil?
       respond_to do |format|
-        format.html { render '/error' , :status => status }
-        format.json { render :nothing => true, :status => status }
+        format.html { render '/error' , status: status }
+        format.json { render status: status, body: nil }
       end
     else
       session[:error_title] = @error_title
