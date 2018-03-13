@@ -16,3 +16,6 @@
 *.swp
 /nbproject
 /public/assets/*
+
+# Old(Rails < 4.1) Secret Token
+config/initializers/secret_token.rb

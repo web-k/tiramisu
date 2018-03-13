@@ -1,4 +1,4 @@
-class AuthenticationController < ActionController::Base
+class AuthenticationController < ApplicationController
   def index
     @callback_url = params[:callback]
     render layout: 'top'

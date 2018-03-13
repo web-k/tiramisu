@@ -40,8 +40,8 @@
                 </div>
               <% end %>
 
-              <div id="channel_name_static" style="display:inline;"><%== @channel.name %></div>
-              <div id="channel_name_edit" style="display:none;"><%== f.text_field :name %></div>
+              <div id="channel_name_static" style="display:inline;"><%= @channel.name %></div>
+              <div id="channel_name_edit" style="display:none;"><%= f.text_field :name %></div>
             <% end %><% end %>
           </div>
           <p class="nav pull-right logout">

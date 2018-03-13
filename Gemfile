@@ -41,6 +41,11 @@ group :development, :test do
   gem 'cucumber'
   gem 'cucumber-rails', :require => false
 end
+
+group :development do
+  gem 'brakeman'
+end
+
 gem 'pusher'
 
 gem 'therubyracer'
