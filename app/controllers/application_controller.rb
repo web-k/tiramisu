@@ -16,16 +16,16 @@ class ApplicationController < ActionController::Base
 
   ERROR_TITLE = {
     not_found: 'Not Found'
-  }
+  }.freeze
 
   def render_error(options = {})
     status = options[:status] || 404
-    @error_title = ERROR_TITLE[:"#{options[:error_label]}"] || ERROR_TITLE[:'not_found']
+    @error_title = ERROR_TITLE[:"#{options[:error_label]}"] || ERROR_TITLE[:not_found]
     redirect_url = options[:redirect_url]
 
     if redirect_url.nil?
       respond_to do |format|
-        format.html { render '/error' , status: status }
+        format.html { render '/error', status: status }
         format.json { render status: status, body: nil }
       end
     else

@@ -44,6 +44,7 @@ end
 
 group :development do
   gem 'brakeman'
+  gem 'rubocop'
 end
 
 gem 'pusher'

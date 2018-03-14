@@ -1,5 +1,5 @@
-class Table < ActiveRecord::Base
+class Table < ApplicationRecord
   include ActiveModel::ForbiddenAttributesProtection
-  has_many :items
-  has_one :channel
+  has_many :items, dependent: :destroy
+  has_one :channel, dependent: :destroy
 end

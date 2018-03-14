@@ -4,6 +4,6 @@ module TableTemplate
     when 'Go' then TableTemplate::Go
     when 'Go6ro' then TableTemplate::Go6ro
     when 'VideoChat' then TableTemplate::VideoChat
-    else nil end
+    end
   end
 end
