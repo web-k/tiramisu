@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.5.0'
 
-gem 'rails'
+gem 'rails', '5.2.0.rc2'
 
 gem 'listen'
 gem 'less-rails'
@@ -11,6 +11,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails", '~> 2.x'
 gem "rails_autolink"
+gem 'bootsnap', require: false
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
