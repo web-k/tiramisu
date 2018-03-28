@@ -50,6 +50,7 @@ end
 
 gem 'pusher'
 
+gem 'webpacker', '~> 3.4'
 gem 'therubyracer'
 gem 'libv8'
 gem 'uglifier'
