@@ -14,7 +14,7 @@ $(function() {
       }
     };
 
-    var is_video_chat = $(".video_chat").size()>0 ? true : false;
+    var is_video_chat = $(".video_chat").length>0 ? true : false;
     if (is_video_chat) {
 
       rtc.on('add remote stream', function(stream, id){
@@ -22,7 +22,7 @@ $(function() {
         var $chat_user = is_video_chat ? $('<video class="chat_user chat_media" id="'+id+'" autoplay="autoplay"></video>') : $('<div class="chat_user audio"><img src="<%= asset_path 'audio.png' %>" alt="" /><audio class="chat_user chat_media" id="'+id+'" autoplay="autoplay"></audio></div>');
         $('div#remote').append($chat_user);
         $chat_user.on("click", function(){
-          if (!$(this).hasClass('audio') && $("#pickup video.chat_user").size()==0) {
+          if (!$(this).hasClass('audio') && $("#pickup video.chat_user").length==0) {
             var $button = $('<input type="button" class="btn btn-small" value="フルスクリーン" id="fullscreen" />');
             $('p.logout').append($button);
             $button.on("click", function() {
@@ -41,7 +41,7 @@ $(function() {
         rtc.attachStream(stream, id.toString());
       });
       rtc.on('disconnect stream', function(id){
-        if($('#pickup #'+id).size()>0) { $('#fullscreen').remove(); }
+        if($('#pickup #'+id).length>0) { $('#fullscreen').remove(); }
         $('#'+id).parent().hasClass("audio") ? $('#'+id).parent().remove() : $('#'+id).remove();
       });
 
