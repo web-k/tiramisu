@@ -62,15 +62,13 @@
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "jquery" %>
+    <%= javascript_pack_tag "jquery-1-8-3" %>
     <%= javascript_include_tag "jquery_ujs" %>
-    <%= javascript_include_tag "jquery-ui-1.9.2.custom.min" %>
-    <%= javascript_include_tag "jquery.ui.touch-punch.min" %>
+    <%= javascript_pack_tag "jquery-ui-1-9-2-custom-min" %>
+    <%= javascript_pack_tag "jquery-ui-touch-punch-min" %>
     <%= javascript_include_tag "twitter/bootstrap" %>
     <%= javascript_include_tag "bootstrap" %>
-    <%= javascript_include_tag "main" %>
-    <%= javascript_include_tag "channels" %>
-    <%= javascript_include_tag "messages" %>
+    <%= javascript_pack_tag "main" %>
     <%= content_for?(:foot) ? yield(:foot) : '' %>
 
   </body>
