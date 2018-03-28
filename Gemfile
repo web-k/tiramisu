@@ -6,9 +6,7 @@ gem 'rails', '5.2.0.rc2'
 gem 'listen'
 gem 'less-rails'
 gem 'sass-rails'
-gem 'coffee-rails'
 
-gem 'jquery-rails'
 gem "twitter-bootstrap-rails", '~> 2.x'
 gem "rails_autolink"
 gem 'bootsnap', require: false
@@ -53,7 +51,6 @@ gem 'pusher'
 gem 'webpacker', '~> 3.4'
 gem 'therubyracer'
 gem 'libv8'
-gem 'uglifier'
 
 group :production do
   gem 'rails_12factor'
