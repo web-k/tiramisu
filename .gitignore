@@ -19,3 +19,9 @@
 
 # Old(Rails < 4.1) Secret Token
 config/initializers/secret_token.rb
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+yarn-error.log
+.yarn-integrity

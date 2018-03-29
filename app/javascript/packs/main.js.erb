@@ -1,3 +1,8 @@
+require("./application")
+require("jquery-ui-bundle")
+require("jquery-ui-touch-punch")
+require("./bootstrap")
+
 var drag_item_state = {
   current: {
     id: undefined,
@@ -27,7 +32,7 @@ $(function(){
     .on('ajax:complete', function() {
       $(this).find("#message_content").prop("disabled", false);
     });
-  if ($('.messages').size() > 0) {
+  if ($('.messages').length > 0) {
 
     var pusher = new Pusher('<%= Pusher.key %>');
 
@@ -87,7 +92,7 @@ $(function(){
         $('.ui-draggable-dragging').fadeTo(1, 0.6);
       }
     });
-    if ($draggable.size() > 0) {
+    if ($draggable.length > 0) {
       setInterval(function(){
         if(drag_item_state.current.id !== drag_item_state.last.id ||
             drag_item_state.current.x !== drag_item_state.last.x ||
@@ -126,7 +131,7 @@ $(function(){
     });
   }
   check_webkit_notifications();
-  if ($('#table_area').size()>0) { initialize_table_upside(); initialize_sound_onoff();}
+  if ($('#table_area').length>0) { initialize_table_upside(); initialize_sound_onoff();}
   channelname_editor();
 });
 
@@ -224,7 +229,7 @@ function webkit_notifications(user_name, content) {
 var table_upside = 'up';
 function initialize_table_upside() {
   var $current_channel = $('.channels .here');
-  if ($current_channel.size()>0) {
+  if ($current_channel.length>0) {
     var channel_id = $current_channel.data('channel-id');
     var tu = localStorage.getItem('channel-'+channel_id+'-table-upside');
     if (tu) {
@@ -266,7 +271,7 @@ function toggle_item_upside($items, table_width, table_height) {
     });
   });
   var $label = $('.label');
-  if ($label.size()>0) {
+  if ($label.length>0) {
     var $label_item = $label.prev();
     var label_item_id = $label_item.data('item-id');
     var item_width = $label_item.width();
@@ -376,7 +381,7 @@ function refresh_table(table) {
 
 function add_member(member_id, member_info) {
   var $members = $('.members');
-  if ($members.find("li[data-member-id='"+member_id+"']").size() > 0) { return; }
+  if ($members.find("li[data-member-id='"+member_id+"']").length > 0) { return; }
   var $member = $('<li>' + member_info.name + '</li>');
   $member.attr('data-member-id', member_id);
   if ($('#my_name').text() == member_info.name) {

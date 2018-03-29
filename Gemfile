@@ -4,12 +4,10 @@ ruby '2.5.0'
 gem 'rails', '5.2.0.rc2'
 
 gem 'listen'
-gem 'less-rails'
 gem 'sass-rails'
-gem 'coffee-rails'
 
-gem 'jquery-rails'
-gem "twitter-bootstrap-rails", '~> 2.x'
+gem "font-awesome-rails"
+gem "bootstrap-sass", '2.3.2'
 gem "rails_autolink"
 gem 'bootsnap', require: false
 
@@ -36,7 +34,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'rails-controller-testing'
-  gem 'execjs'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'cucumber'
@@ -50,8 +47,7 @@ end
 
 gem 'pusher'
 
-gem 'therubyracer'
-gem 'libv8'
+gem 'webpacker', '~> 3.4'
 gem 'uglifier'
 
 group :production do

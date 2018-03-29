@@ -13,7 +13,6 @@
     <![endif]-->
     <script src="https://js.pusher.com/4.2/pusher.min.js"></script>
 
-    <%= stylesheet_link_tag "bootstrap_and_overrides", :media => "all" %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= stylesheet_link_tag "channels", :media => "all" %>
     <%= stylesheet_link_tag "messages", :media => "all" %>
@@ -62,15 +61,7 @@
     <!-- Javascripts
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "jquery" %>
-    <%= javascript_include_tag "jquery_ujs" %>
-    <%= javascript_include_tag "jquery-ui-1.9.2.custom.min" %>
-    <%= javascript_include_tag "jquery.ui.touch-punch.min" %>
-    <%= javascript_include_tag "twitter/bootstrap" %>
-    <%= javascript_include_tag "bootstrap" %>
-    <%= javascript_include_tag "main" %>
-    <%= javascript_include_tag "channels" %>
-    <%= javascript_include_tag "messages" %>
+    <%= javascript_pack_tag "main" %>
     <%= content_for?(:foot) ? yield(:foot) : '' %>
 
   </body>
