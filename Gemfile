@@ -47,7 +47,7 @@ end
 
 gem 'pusher'
 
-gem 'webpacker', '~> 3.4'
+gem 'webpacker', '>= 4'
 gem 'uglifier'
 
 group :production do
