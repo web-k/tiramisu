@@ -174,7 +174,7 @@ function set_label(id, name, top, left) {
       });
     } else {
       $(".label").remove();
-      $set_label_item.after("<div class='label'>" + name + "</div>");
+      $set_label_item.after("<div class='label label-default'>" + name + "</div>");
       $(".label").css(set_position);
     }
 }
@@ -235,7 +235,7 @@ function initialize_table_upside() {
     if (tu) {
       if(tu === 'down') { setTimeout(function(){toggle_table_upside();}, 300); }
     }
-    var $upside_button = $('<button class="btn btn-small" id="table_upside">テーブル回転</button>');
+    var $upside_button = $('<button class="btn btn-default btn-sm" id="table_upside">テーブル回転</button>');
     $('p.logout').append($upside_button);
     $upside_button.click(toggle_table_upside);
   }
@@ -318,7 +318,7 @@ function initialize_sound_onoff() {
   } else {
     sound_onoff_str = "sound off ";
   }
-  $onoff_button = $('<button class="btn btn-small" id="sound_onoff" onclick="change_soundonoff(this)"> ' + sound_onoff_str + '</button>');
+  $onoff_button = $('<button class="btn btn-default btn-sm" id="sound_onoff" onclick="change_soundonoff(this)"> ' + sound_onoff_str + '</button>');
   $('p.logout').append($onoff_button);
 }
 function change_soundonoff(item) {

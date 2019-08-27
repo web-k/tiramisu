@@ -32,10 +32,17 @@
     color: gray;
   }
 }
-.span9.go {
-  min-width: 700px;
-  margin-bottom: 12px;
+.go {
+  &.col-md-9 {
+    min-width: 700px;
+    margin-bottom: 12px;
+    padding-right: 0;
+  }
+  &.col-md-3{
+    padding-left: 0;
+  }
 }
+
 .active {
   z-index: 100;
 }

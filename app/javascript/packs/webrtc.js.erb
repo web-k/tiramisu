@@ -45,8 +45,8 @@ $(function() {
         $('#'+id).parent().hasClass("audio") ? $('#'+id).parent().remove() : $('#'+id).remove();
       });
 
-      var $audio_chat_button = $('<input type="button" class="btn btn-small" value="音声チャット" id="audio_chat_on" />');
-      var $video_chat_button = $('<input type="button" class="btn btn-small" value="ビデオチャット" id="video_chat_on" />');
+      var $audio_chat_button = $('<input type="button" class="btn btn-default btn-sm" value="音声チャット" id="audio_chat_on" />');
+      var $video_chat_button = $('<input type="button" class="btn btn-default btn-sm" value="ビデオチャット" id="video_chat_on" />');
       $('p.logout').append($audio_chat_button).append($video_chat_button);
 
       var start_chat = function (is_video) {

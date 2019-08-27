@@ -1,28 +1,31 @@
-<div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-    <h3>サインイン</h3>
-  </div>
-  <div class="modal-body">
-    <%= form_tag({controller: 'authentication', action: 'login'}, {class: 'form-inline'}) do %>
-    <%= hidden_field_tag :callback, @callback_url %>
-    <%= text_field_tag 'user_name'%>
-    <%= submit_tag 'Login', class: 'btn' %>
-    <% end %>
-  </div>
-</div>
-
-<div class="row-fluid">
-  <div class="span4 hero-unit">
+<div class="row">
+  <div class="col-md-4">
     <h2>Tiramisuとは</h2>
     <p>Tiramisu(ティラミス)とはWebチャットシステムです。名前を入力してサインインすればブラウザ上でチャットを行うことができます。</p>
   </div>
-  <div class="span4 hero-unit">
+  <div class="col-md-4">
     <h2>特徴</h2>
     <p>WebSocketを利用したリアルタイムチャットが可能。Web上でIRCと同じ様な操作感を味わえます。また、ログインしていなくても過去のログが保存されているので遡ってメッセージを参照出来ます。</p>
   </div>
-  <div class="span4 hero-unit">
+  <div class="col-md-4">
     <h2>Let's enjoy!</h2>
     <p>Tiramisuでチャットを楽しんでください。TiramisuはMITライセンスのオープンソースです。<a href="https://github.com/web-k/tiramisu" target="_blank">Github</a>にて公開しています。意見・要望・Pull-Requestはtiramisuプロジェクトまでお寄せください。</p>
   </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+        <h3 class="modal-title">サインイン</h3>
+      </div>
+      <div class="modal-body">
+        <%= form_tag({controller: 'authentication', action: 'login'}, {class: 'form-inline'}) do %>
+        <%= hidden_field_tag :callback, @callback_url %>
+        <%= text_field_tag 'user_name'%>
+        <%= submit_tag 'Login', class: 'btn btn-default' %>
+        <% end %>
+      </div>
+    </div>
 </div>
