@@ -9,18 +9,13 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  */
+@import "bootstrap-sprockets";
 @import "bootstrap";
 
 @textColor: #999;
 
 body {
        padding-top: 56px;
-}
-.navbar .brand {
-  padding: 0 20px;
-  position: relative;
-  top: 6px;
-  left: -1px;
 }
 
 // Set the Font Awesome (Font Awesome is default. You can disable by commenting below lines)
@@ -58,24 +53,41 @@ header.subhead {
     margin-right: -20px;
   }
 }
-.navbar .nav.logout {
-  margin-top: 8px;
-  .btn {
-    margin-top: -2px;
-    margin-left: 4px;
+.navbar {
+  .navbar-brand {
+    padding: 0;
+    position: relative;
+    top: 10px;
+    left: -1px;
+  }
+  .navbar-nav {
+    &.logout {
+      margin-top: 12px;
+    }
+    .btn {
+      margin-top: -2px;
+      margin-left: 4px;
+      &.sign-in {
+        margin-top: 10px;
+      }
+    }
+  }
+  & + .container {
+    margin-top: 10px;
   }
 }
 #message_content {
   width: 98%;
 }
-.span3 {
-  .new_message {
-    margin-right: 8px;
-   }
+.col-md-3, .col-md-9 {
+  form {
+    margin-bottom: 6px;
+  }
   .messages {
     height: 300px;
     width: 100%;
     overflow: auto;
+    padding-inline-start: 0;
   }
 }
 #main .error {
@@ -92,4 +104,9 @@ form.edit_channel {
     background-size: contain;
     opacity: 0.5;
   }
+}
+
+#new_channel {
+  margin-top: 6px;
+  margin-bottom: 16px;
 }

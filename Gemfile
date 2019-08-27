@@ -4,10 +4,10 @@ ruby '2.6.3'
 gem 'rails'
 
 gem 'listen'
-gem 'sass-rails'
 
 gem "font-awesome-rails"
-gem "bootstrap-sass", '2.3.2'
+gem "bootstrap-sass", '>=2.3.2'
+gem 'sassc-rails', '>= 2.1.0'
 gem "rails_autolink"
 gem 'bootsnap', require: false
 
