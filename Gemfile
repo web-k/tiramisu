@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 ruby '2.6.6'
 
-gem 'rails'
+gem 'rails', '~> 5.2.0'
+gem 'sprockets', '~> 3'
 
 gem 'listen'
 
