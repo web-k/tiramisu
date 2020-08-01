@@ -27,7 +27,7 @@ gem 'bootsnap', require: false
 # To use debugger
 # gem 'debugger'
 
-gem 'rake', '< 11.0'
+gem 'rake', '< 13.0'
 
 group :development, :test do
   gem 'sqlite3'
